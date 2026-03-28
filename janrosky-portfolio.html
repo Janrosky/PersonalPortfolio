@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alejandro Chacón — Desarrollador de Software</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050508;
+      --bg2: #0a0a10;
+      --fg: #e8e8f0;
+      --muted: rgba(232,232,240,0.42);
+      --accent: #7c6fff;
+      --accent2: #ff6b6b;
+      --accent3: #00d4aa;
+      --border: rgba(255,255,255,0.08);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ── */
+    #cursor-dot, #cursor-ring {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      z-index: 99999;
+      top: 0; left: 0;
+    }
+    #cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      margin: -4px 0 0 -4px;
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(124,111,255,0.55);
+      margin: -18px 0 0 -18px;
+      transition: width .3s, height .3s, margin .3s, border-color .3s;
+    }
+    body.hovered #cursor-ring {
+      width: 56px; height: 56px;
+      margin: -28px 0 0 -28px;
+      border-color: rgba(124,111,255,0.9);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 9000;
+      padding: 1.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: border-color .4s, backdrop-filter .4s, background .4s;
+    }
+    nav.scrolled {
+      border-color: var(--border);
+      backdrop-filter: blur(24px);
+      background: rgba(5,5,8,.75);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 1.1rem; letter-spacing: -.02em;
+      color: var(--fg); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: .875rem; color: var(--muted);
+      text-decoration: none; transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-cta {
+      font-size: .875rem; font-weight: 500;
+      color: var(--fg);
+      background: rgba(124,111,255,.15);
+      border: 1px solid rgba(124,111,255,.4);
+      padding: .5rem 1.25rem; border-radius: 100px;
+      text-decoration: none; display: inline-block;
+      transition: background .25s, border-color .25s;
+    }
+    .nav-cta:hover { background: rgba(124,111,255,.3); border-color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 3rem;
+      position: relative; overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 0;
+    }
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(100px); pointer-events: none; z-index: 1;
+    }
+    .orb-1 { width: 600px; height: 600px; background: rgba(124,111,255,.12); top: -200px; right: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: rgba(0,212,170,.07); bottom: -100px; left: 10%; }
+
+    .hero-inner { position: relative; z-index: 2; max-width: 900px; }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: .78rem; color: var(--accent);
+      letter-spacing: .15em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800; line-height: 1; letter-spacing: -.03em;
+      margin-bottom: 1.75rem;
+    }
+    .hero-headline .accent { color: var(--accent); }
+    .hero-headline .line { overflow: hidden; display: block; }
+    .hero-headline .line-inner { display: block; }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--muted); max-width: 540px;
+      line-height: 1.8; margin-bottom: 3rem;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      font-weight: 500; font-size: .95rem;
+      padding: .875rem 2rem; border-radius: 100px;
+      background: var(--accent); color: #fff;
+      text-decoration: none; display: inline-block;
+      box-shadow: 0 0 32px rgba(124,111,255,.35);
+      transition: box-shadow .3s;
+    }
+    .btn-primary:hover { box-shadow: 0 0 52px rgba(124,111,255,.6); }
+    .btn-secondary {
+      font-size: .95rem; padding: .875rem 2rem; border-radius: 100px;
+      border: 1px solid var(--border); color: var(--muted);
+      text-decoration: none; display: inline-block;
+      transition: color .25s, border-color .25s;
+    }
+    .btn-secondary:hover { color: var(--fg); border-color: rgba(255,255,255,.25); }
+
+    .scroll-indicator {
+      position: absolute; bottom: 2.5rem; left: 3rem;
+      display: flex; align-items: center; gap: .75rem;
+      font-family: var(--font-mono); font-size: .7rem;
+      color: var(--muted); letter-spacing: .1em;
+    }
+    .scroll-line { width: 40px; height: 1px; background: var(--muted); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: clamp(80px,12vw,140px) 3rem; }
+    .section-label {
+      font-family: var(--font-mono); font-size: .72rem; color: var(--accent);
+      letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .section-label::before { content:''; display:block; width:24px; height:1px; background:var(--accent); }
+
+    /* ── ABOUT ── */
+    #about { border-top: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; max-width: 1100px; }
+    .about-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem,4vw,3.5rem); font-weight: 700;
+      line-height: 1.1; letter-spacing: -.025em; margin-bottom: 1.5rem;
+    }
+    .about-text { font-size: 1.05rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; }
+    .about-text strong { color: var(--fg); font-weight: 500; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+    .tag { font-family: var(--font-mono); font-size: .75rem; padding: .35rem .85rem; border-radius: 100px; border: 1px solid var(--border); color: var(--muted); }
+    .about-visual { position: relative; height: 420px; display: flex; align-items: center; justify-content: center; }
+    .about-card {
+      position: absolute; background: rgba(255,255,255,.03);
+      border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem 2rem; backdrop-filter: blur(10px);
+    }
+    .about-card.card-1 { top: 0; left: 0; width: 200px; }
+    .about-card.card-2 { bottom: 0; right: 0; width: 210px; }
+    .about-card.card-3 { top: 50%; left: 50%; transform: translate(-50%,-50%); width: 220px; }
+    .card-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1; }
+    .card-label { font-size: .8rem; color: var(--muted); margin-top: .25rem; }
+
+    /* ── SERVICES ── */
+    #services { border-top: 1px solid var(--border); background: var(--bg2); }
+    .services-header { max-width: 700px; margin-bottom: 4rem; }
+    .services-headline {
+      font-family: var(--font-display); font-size: clamp(2rem,4vw,3.25rem);
+      font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 1rem;
+    }
+    .services-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+    }
+    .service-card {
+      background: rgba(255,255,255,.02); padding: 2.5rem;
+      position: relative; overflow: hidden; transition: background .3s;
+    }
+    .service-card::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg,rgba(124,111,255,.08),transparent);
+      opacity:0; transition: opacity .4s;
+    }
+    .service-card:hover { background: rgba(255,255,255,.04); }
+    .service-card:hover::before { opacity: 1; }
+    .srb { border-right: 1px solid var(--border); }
+    .sbb { border-bottom: 1px solid var(--border); }
+    .service-icon { font-size: 1.75rem; margin-bottom: 1.25rem; display: block; }
+    .service-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: .75rem; }
+    .service-desc { font-size: .9rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── PROCESS ── */
+    #process { border-top: 1px solid var(--border); }
+    .process-headline {
+      font-family: var(--font-display); font-size: clamp(2rem,4vw,3.25rem);
+      font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 1rem;
+    }
+    .steps { display: flex; flex-direction: column; max-width: 800px; margin-top: 4rem; }
+    .step { display: grid; grid-template-columns: 80px 1fr; gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--font-mono); font-size: .72rem; color: var(--accent); letter-spacing: .1em; padding-top: .2rem; }
+    .step-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-desc { font-size: .925rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── CONTACT ── */
+    #contact { border-top: 1px solid var(--border); background: var(--bg2); }
+    .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .contact-headline {
+      font-family: var(--font-display); font-size: clamp(2.5rem,5vw,4.5rem);
+      font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.5rem;
+    }
+    .contact-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 3rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+    .contact-link {
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-mono); font-size: .85rem; color: var(--muted);
+      text-decoration: none; padding: 1rem 2rem;
+      border: 1px solid var(--border); border-radius: 12px;
+      width: 100%; max-width: 440px;
+      transition: border-color .25s, color .25s, background .25s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--fg); background: rgba(124,111,255,.06); }
+    .cl-arrow { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copy, .footer-note { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+    .footer-note span { color: var(--accent); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .rd1 { transition-delay: .1s; } .rd2 { transition-delay: .2s; } .rd3 { transition-delay: .3s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 60px 1.5rem; }
+      #hero { padding: 0 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { display: none; }
+      .scroll-indicator { left: 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: .5rem; text-align: center; }
+      body { cursor: auto; }
+      #cursor-dot, #cursor-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">ACG<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Acerca de</a></li>
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#process">Proceso</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Hablemos →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Alejandro Chacón Garita · Cartago, Costa Rica</p>
+      <h1 class="hero-headline">
+        <span class="line"><span class="line-inner">Software que</span></span>
+        <span class="line"><span class="line-inner"><span class="accent">resuelve</span></span></span>
+        <span class="line"><span class="line-inner">problemas reales.</span></span>
+      </h1>
+      <p class="hero-sub">
+        Desarrollador de software especializado en sistemas ERP, dashboards de datos y automatización de procesos para empresas que quieren crecer con tecnología hecha a medida.
+      </p>
+      <div class="hero-ctas">
+        <a href="#services" class="btn-primary">Ver servicios</a>
+        <a href="#contact" class="btn-secondary">Contacto directo</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span class="scroll-line"></span>
+      <span>scroll</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">Acerca de mí</div>
+    <div class="about-grid">
+      <div>
+        <h2 class="about-headline reveal">Tecnología que se construye con propósito.</h2>
+        <p class="about-text reveal rd1">
+          Soy <strong>Alejandro Chacón Garita</strong>, ingeniero de software con experiencia en entornos industriales regulados y desarrollo de sistemas empresariales.
+          Actualmente trabajo como <strong>Product & Process Engineer</strong> me especializo en el desarrollo de ERP multi-empresa en Oracle APEX y Webs para PYMEs.
+        </p>
+        <p class="about-text reveal rd2">
+          Me especializo en convertir procesos complejos en soluciones claras: desde la base de datos hasta la interfaz final. Mi enfoque combina <strong>ingeniería de procesos, desarrollo de software y consultoría IT</strong> para PYMEs.
+        </p>
+        <div class="about-tags reveal rd3">
+          <span class="tag">Oracle APEX</span>
+          <span class="tag">PL/SQL</span>
+          <span class="tag">C#.NET</span>
+          <span class="tag">SQL</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">AWS - Azure</span>
+          <span class="tag">SCRUM - Agile Methodologies</span>
+          <span class="tag">CAD Software</span>
+          <span class="tag">Lean / Six Sigma</span>
+        </div>
+      </div>
+      <div class="about-visual reveal rd2">
+        <div class="about-card card-3">
+          <div class="card-num">5+</div>
+          <div class="card-label">años en tecnología</div>
+        </div>
+        <div class="about-card card-1">
+          <div class="card-num" style="color:var(--accent3)">4</div>
+          <div class="card-label">empresas activas</div>
+        </div>
+        <div class="about-card card-2">
+          <div class="card-num" style="color:var(--accent2)">100%</div>
+          <div class="card-label">soluciones a medida</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header">
+      <div class="section-label reveal">Servicios</div>
+      <h2 class="services-headline reveal rd1">Todo lo que tu empresa necesita para digitalizar sus procesos.</h2>
+      <p class="services-sub reveal rd2">Trabajo de principio a fin: análisis, diseño, desarrollo e implementación. Sin dependencias externas innecesarias.</p>
+    </div>
+    <div class="services-grid reveal rd1">
+      <div class="service-card srb sbb">
+        <span class="service-icon">⚙️</span>
+        <div class="service-name">Sistemas ERP & Oracle APEX</div>
+        <div class="service-desc">Desarrollo de sistemas empresariales personalizados con Oracle APEX y PL/SQL. Módulos de ventas, compras, contabilidad, inventario y más.</div>
+      </div>
+      <div class="service-card sbb">
+        <span class="service-icon">📊</span>
+        <div class="service-name">Dashboards & Datos</div>
+        <div class="service-desc">Visualización de datos en tiempo real para toma de decisiones en herramientas como Power BI. Dashboards de manufactura, KPIs operativos y reportes automáticos.</div>
+      </div>
+      <div class="service-card srb sbb">
+        <span class="service-icon">🔄</span>
+        <div class="service-name">Automatización de Procesos</div>
+        <div class="service-desc">Identificación y eliminación de cuellos de botella. Automatización de flujos, reportes y tareas repetitivas en entornos industriales y comerciales.</div>
+      </div>
+      <div class="service-card sbb">
+        <span class="service-icon">🏢</span>
+        <div class="service-name">Consultoría IT para PYMEs</div>
+        <div class="service-desc">Acompañamiento estratégico para empresas en proceso de digitalización: herramientas, procesos y arquitectura tecnológica adaptada a tu escala.</div>
+      </div>
+      <div class="service-card srb">
+        <span class="service-icon">🌐</span>
+        <div class="service-name">Desarrollo Web & Apps</div>
+        <div class="service-desc">Aplicaciones web modernas, landing pages y herramientas internas. Stack: JavaScript, Tailwind CSS — deployable en Vercel, AWS O Azure.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">📋</span>
+        <div class="service-name">Documentación & Procedimientos</div>
+        <div class="service-desc">Redacción de SOPs, manuales técnicos y documentación de procesos para entornos regulados (ISO, FDA, GMP) o equipos en crecimiento.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="section-label reveal">Proceso</div>
+    <h2 class="process-headline reveal rd1">Cómo trabajo contigo.</h2>
+    <p class="services-sub reveal rd2">Sin metodologías de agencia. Comunicación directa, entregas claras y código que funciona desde el día uno.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="step-num">01 — Descubrimiento</span>
+        <div>
+          <div class="step-title">Entiendo tu problema</div>
+          <div class="step-desc">Escucho cómo funciona tu empresa hoy, qué duele más y qué quieres lograr. Sin asumir, sin proponer de más.</div>
+        </div>
+      </div>
+      <div class="step reveal rd1">
+        <span class="step-num">02 — Diseño</span>
+        <div>
+          <div class="step-title">Arquitectura de la solución</div>
+          <div class="step-desc">Propuesta técnica clara: módulos, base de datos, flujos y tecnologías. Aprobamos juntos antes de escribir una línea de código.</div>
+        </div>
+      </div>
+      <div class="step reveal rd2">
+        <span class="step-num">03 — Desarrollo</span>
+        <div>
+          <div class="step-title">Construcción iterativa</div>
+          <div class="step-desc">Trabajo en ciclos cortos con entregas visibles. Puedes ver el avance, dar retroalimentación y ajustar en tiempo real.</div>
+        </div>
+      </div>
+      <div class="step reveal rd3">
+        <span class="step-num">04 — Entrega</span>
+        <div>
+          <div class="step-title">Deploy, documentación y soporte</div>
+          <div class="step-desc">El sistema se entrega funcionando, documentado y con capacitación. No desaparezco al firmar — el soporte post-entrega es parte del trato.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label reveal" style="justify-content:center;margin-bottom:1.5rem;">Contacto</div>
+      <h2 class="contact-headline reveal rd1">¿Tienes un proyecto en mente?</h2>
+      <p class="contact-sub reveal rd2">Cuéntame lo que necesitas. Respondo rápido y hablo claro. Sin formularios largos, sin burocracia.</p>
+      <div class="contact-links reveal rd3">
+        <a href="mailto:janrosky@gmail.com?subject=Contacto%20desde%20tu%20web" id="link-email" class="contact-link">
+          <span>✉️ &nbsp;janrosky@gmail.com</span>
+          <span class="cl-arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/chaconjky" target="_blank" rel="noopener" class="contact-link">
+          <span>💼 &nbsp;linkedin.com/in/chaconjky</span>
+          <span class="cl-arrow">→</span>
+        </a>
+        <a href="https://github.com/Janrosky" target="_blank" rel="noopener" class="contact-link">
+          <span>⌨️ &nbsp;github.com/Janrosky</span>
+          <span class="cl-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 Alejandro Chacón Garita. Todos los derechos reservados.</span>
+    <span class="footer-note">Construido con <span>♥</span> en Cartago, Costa Rica.</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    /* ── EMAIL: set via JS to avoid scraper obfuscation ── */
+    document.getElementById('link-email').href = 'mailto:janrosky@gmail.com';
+
+    /* ── SMOOTH SCROLL ── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        const target = document.querySelector(id);
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    /* ── NAV ── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ── REVEAL ON SCROLL ── */
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    /* ── CANVAS PARTICLES ── */
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, pts = [];
+
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 110; i++) {
+      pts.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 1.4 + 0.3,
+        vx: (Math.random() - .5) * .3,
+        vy: (Math.random() - .5) * .3,
+        a: Math.random() * .45 + .08
+      });
+    }
+
+    function drawCanvas() {
+      ctx.clearRect(0, 0, W, H);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(124,111,255,${p.a})`;
+        ctx.fill();
+      });
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 100) {
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = `rgba(124,111,255,${.07 * (1 - d/100)})`;
+            ctx.lineWidth = .5; ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawCanvas);
+    }
+    drawCanvas();
+
+    /* ── HERO ANIMATIONS ── */
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from('.hero-eyebrow', { opacity:0, y:16, duration:.8, ease:'power3.out', delay:.1 });
+    gsap.from('.line-inner',   { y:'110%', duration:1.1, stagger:.12, ease:'power4.out', delay:.25 });
+    gsap.from('.hero-sub',     { opacity:0, y:16, duration:.9, ease:'power3.out', delay:.6 });
+    gsap.from('.hero-ctas',    { opacity:0, y:16, duration:.8, ease:'power3.out', delay:.8 });
+    gsap.from('.scroll-indicator', { opacity:0, duration:1, delay:1.2 });
+
+    /* ── CURSOR (desktop only) ── */
+    if (window.innerWidth >= 768) {
+      const dot  = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      let mx = 0, my = 0, rx = 0, ry = 0;
+
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top  = my + 'px';
+      });
+
+      (function loop() {
+        rx += (mx - rx) * .11;
+        ry += (my - ry) * .11;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(loop);
+      })();
+
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovered'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
+      });
+
+      /* orb parallax */
+      document.addEventListener('mousemove', e => {
+        const x = (e.clientX / W - .5) * 2;
+        const y = (e.clientY / H - .5) * 2;
+        gsap.to('.orb-1', { x: x*28, y: y*28, duration:2, ease:'power2.out' });
+        gsap.to('.orb-2', { x: x*-18, y: y*-18, duration:2.5, ease:'power2.out' });
+      });
+    }
+  </script>
+</body>
+</html>
