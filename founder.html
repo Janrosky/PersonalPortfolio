@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alejandro Chacón Garita — Fundador de Nextek</title>
+  <meta name="description" content="Alejandro Chacón Garita, Software Developer especializado en Oracle APEX, PL/SQL y sistemas ERP. Fundador de Nextek, Costa Rica." />
+  <meta property="og:title" content="Alejandro Chacón Garita — Fundador de Nextek" />
+  <meta property="og:type" content="profile" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050508; --bg2: #0a0a10; --fg: #e8e8f0;
+      --muted: rgba(232,232,240,0.42);
+      --accent: #DB2955; --accent-rgb: 219,41,85;
+      --accent2: #ff6b6b; --accent3: #00d4aa;
+      --border: rgba(255,255,255,0.08);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--fg);font-family:var(--font-body);overflow-x:hidden;}
+    em{font-style:italic;font-family:var(--font-display);font-weight:600;color:var(--accent);}
+    p{text-align:justify;text-align-last:left;}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:9000;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid transparent;transition:border-color .4s,background .4s,backdrop-filter .4s;}
+    nav.scrolled{border-color:var(--border);backdrop-filter:blur(24px);background:rgba(5,5,8,.75);}
+    .nav-logo{font-family:var(--font-display);font-weight:800;font-size:1.15rem;color:var(--fg);text-decoration:none;}
+    .nav-logo span{color:var(--accent);}
+    .nav-back{font-family:var(--font-mono);font-size:.8rem;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .25s;}
+    .nav-back:hover{color:var(--fg);}
+
+    #hero{min-height:78vh;display:flex;flex-direction:column;justify-content:center;padding:0 3rem;position:relative;overflow:hidden;}
+    .orb{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;}
+    .orb-1{width:600px;height:600px;background:rgba(var(--accent-rgb),.12);top:-200px;right:-100px;}
+    .hero-inner{position:relative;z-index:2;max-width:900px;}
+    .hero-eyebrow{font-family:var(--font-mono);font-size:.78rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.5rem;}
+    .hero-headline{font-family:var(--font-display);font-size:clamp(2.4rem,6.5vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:.75rem;}
+    .hero-role{font-family:var(--font-mono);font-size:.85rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.75rem;}
+    .hero-role span{color:var(--accent3);}
+    .hero-sub{font-size:clamp(1rem,2vw,1.1rem);color:var(--muted);max-width:620px;line-height:1.85;margin-bottom:2.5rem;}
+    .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+    .btn-primary{font-weight:500;font-size:.95rem;padding:.875rem 2rem;border-radius:100px;background:var(--accent);color:#fff;text-decoration:none;display:inline-block;box-shadow:0 0 32px rgba(var(--accent-rgb),.35);transition:box-shadow .3s;}
+    .btn-primary:hover{box-shadow:0 0 52px rgba(var(--accent-rgb),.6);}
+    .btn-secondary{font-size:.95rem;padding:.875rem 2rem;border-radius:100px;border:1px solid var(--border);color:var(--muted);text-decoration:none;display:inline-block;transition:color .25s,border-color .25s;}
+    .btn-secondary:hover{color:var(--fg);border-color:rgba(255,255,255,.25);}
+
+    section{padding:clamp(70px,10vw,120px) 3rem;}
+    .section-label{font-family:var(--font-mono);font-size:.72rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;}
+    .section-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+
+    #about{border-top:1px solid var(--border);}
+    .about-headline{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.75rem);font-weight:700;line-height:1.2;letter-spacing:-.02em;margin-bottom:1.5rem;max-width:720px;}
+    .about-text{font-size:1.05rem;color:var(--muted);line-height:1.85;max-width:720px;margin-bottom:1.1rem;}
+    .about-text strong{color:var(--fg);font-weight:500;}
+
+    /* ── EXPERIENCE ── */
+    #trajectory{border-top:1px solid var(--border);background:var(--bg2);}
+    .traj-headline{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.02em;margin-bottom:3.5rem;}
+    .timeline{display:flex;flex-direction:column;max-width:840px;}
+    .tl-item{display:grid;grid-template-columns:150px 1fr;gap:2rem;padding:2.25rem 0;border-bottom:1px solid var(--border);}
+    .tl-item:last-child{border-bottom:none;}
+    .tl-date{font-family:var(--font-mono);font-size:.75rem;color:var(--accent);padding-top:.2rem;}
+    .tl-role{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:.3rem;}
+    .tl-org{font-size:.8rem;color:var(--muted);margin-bottom:.85rem;font-family:var(--font-mono);letter-spacing:.03em;}
+    .tl-bullets{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+    .tl-bullets li{font-size:.9rem;color:var(--muted);line-height:1.75;text-align:justify;text-align-last:left;padding-left:1.1rem;position:relative;}
+    .tl-bullets li::before{content:'—';position:absolute;left:0;color:var(--accent);}
+
+    /* ── EDUCATION / CERTS ── */
+    #credentials{border-top:1px solid var(--border);}
+    .cred-headline{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.02em;margin-bottom:3rem;}
+    .cred-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;}
+    .cred-block-title{font-family:var(--font-mono);font-size:.75rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;}
+    .edu-item{margin-bottom:1.75rem;}
+    .edu-degree{font-family:var(--font-display);font-weight:700;font-size:1.05rem;margin-bottom:.25rem;}
+    .edu-org{font-size:.85rem;color:var(--muted);font-family:var(--font-mono);margin-bottom:.25rem;}
+    .edu-note{font-size:.85rem;color:var(--muted);}
+    .honor-badge{display:inline-block;font-family:var(--font-mono);font-size:.68rem;color:var(--accent3);border:1px solid rgba(0,212,170,.35);background:rgba(0,212,170,.06);padding:.15rem .6rem;border-radius:100px;margin-top:.4rem;}
+    .cert-list{list-style:none;display:flex;flex-direction:column;gap:1rem;}
+    .cert-list li{font-size:.9rem;color:var(--fg);border-bottom:1px solid var(--border);padding-bottom:.85rem;}
+    .cert-list li:last-child{border-bottom:none;}
+    .cert-meta{display:block;font-size:.78rem;color:var(--muted);font-family:var(--font-mono);margin-top:.2rem;}
+
+    /* ── SKILLS ── */
+    #skills{border-top:1px solid var(--border);background:var(--bg2);}
+    .skills-headline{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.02em;margin-bottom:2.5rem;}
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;}
+    .skill-group-title{font-family:var(--font-mono);font-size:.75rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:.5rem;}
+    .tag{font-family:var(--font-mono);font-size:.75rem;padding:.35rem .85rem;border-radius:100px;border:1px solid var(--border);color:var(--muted);}
+    .lang-row{display:flex;justify-content:space-between;max-width:260px;font-size:.9rem;padding:.6rem 0;border-bottom:1px solid var(--border);}
+    .lang-row span:last-child{color:var(--muted);font-family:var(--font-mono);font-size:.78rem;}
+
+    /* ── PERSONAL PROJECTS ── */
+    #own-projects{border-top:1px solid var(--border);}
+    .op-headline{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.75rem);font-weight:700;letter-spacing:-.02em;margin-bottom:3rem;}
+    .op-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;}
+    .op-card{border:1px solid var(--border);border-radius:16px;padding:1.75rem;background:rgba(255,255,255,.015);transition:border-color .3s,background .3s;}
+    .op-card:hover{border-color:rgba(var(--accent-rgb),.4);background:rgba(255,255,255,.03);}
+    .op-name{font-family:var(--font-display);font-weight:700;font-size:1.1rem;margin-bottom:.5rem;}
+    .op-desc{font-size:.85rem;color:var(--muted);line-height:1.7;}
+
+    #contact{border-top:1px solid var(--border);}
+    .contact-inner{max-width:600px;}
+    .contact-headline{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:1.25rem;}
+    .contact-sub{color:var(--muted);font-size:1rem;line-height:1.7;margin-bottom:2.5rem;}
+    .contact-links{display:flex;flex-direction:column;gap:1rem;}
+    .contact-link{display:flex;align-items:center;justify-content:space-between;font-family:var(--font-mono);font-size:.85rem;color:var(--muted);text-decoration:none;padding:1rem 1.5rem;border:1px solid var(--border);border-radius:12px;transition:border-color .25s,color .25s,background .25s;}
+    .contact-link:hover{border-color:var(--accent);color:var(--fg);background:rgba(var(--accent-rgb),.06);}
+    .cl-arrow{color:var(--accent);}
+
+    footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .footer-copy,.footer-note{font-family:var(--font-mono);font-size:.72rem;color:var(--muted);}
+    .footer-note a{color:var(--muted);text-decoration:underline;text-underline-offset:3px;}
+    .footer-note a:hover{color:var(--fg);}
+
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    .rd1{transition-delay:.1s;} .rd2{transition-delay:.2s;} .rd3{transition-delay:.3s;}
+
+    @media (max-width:768px){
+      nav{padding:1.25rem 1.5rem;}
+      section{padding:60px 1.5rem;}
+      #hero{padding:0 1.5rem;min-height:70vh;}
+      .tl-item{grid-template-columns:1fr;gap:.5rem;}
+      .cred-grid{grid-template-columns:1fr;gap:2.5rem;}
+      footer{padding:1.5rem;flex-direction:column;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">NEX<span>TEK</span></a>
+    <a href="index.html" class="nav-back">← Volver a Nextek</a>
+  </nav>
+
+  <section id="hero">
+    <div class="orb orb-1"></div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Fundador · Nextek</p>
+      <h1 class="hero-headline">Alejandro Chacón Garita</h1>
+      <p class="hero-role">Software Developer <span>·</span> ERP Systems <span>·</span> Data &amp; Process Engineering</p>
+      <p class="hero-sub">
+        Ingeniero de software con experiencia real en desarrollo de software, análisis de datos y soporte técnico bilingüe. Me especializo en la intersección entre código y negocio: no solo construyo funcionalidades, sino que entiendo para qué sirven. Trabajo con autonomía, me adapto a entornos regulados y comunico con claridad tanto con equipos técnicos como con stakeholders no técnicos.
+      </p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Contactar</a>
+        <a href="https://www.linkedin.com/in/chaconjky" target="_blank" rel="noopener" class="btn-secondary">Ver LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="trajectory">
+    <div class="section-label reveal">Experiencia</div>
+    <h2 class="traj-headline reveal rd1">Trayectoria profesional</h2>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <span class="tl-date">Feb. 2026 — Actualidad</span>
+        <div>
+          <div class="tl-role">Software Developer / APEX Developer</div>
+          <div class="tl-org">NAVASOFT SOLUCIONES · CARTAGO, CR (REMOTO)</div>
+          <ul class="tl-bullets">
+            <li>Desarrollé de forma independiente un ERP multiempresa sobre Oracle APEX + PL/SQL, cubriendo facturación de compras y ventas, cobros, contabilidad y administración bancaria para cuatro empresas activas simultáneas.</li>
+            <li>Diseñé e implementé paquetes PL/SQL con lógica de negocio compleja: validaciones, manejo de errores y generación automática de asientos contables de doble entrada.</li>
+            <li>Construí pantallas master-detail con LOVs dinámicos en cascada e integré Ajax Callbacks para lógica desacoplada de la interfaz.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal rd1">
+        <span class="tl-date">Sept. 2025 — Feb. 2026</span>
+        <div>
+          <div class="tl-role">Product &amp; Process Engineer</div>
+          <div class="tl-org">EDWARDS LIFESCIENCES · CARTAGO, CR</div>
+          <ul class="tl-bullets">
+            <li>Lideré el proyecto SME Knowledge Management, organizando y documentando el conocimiento técnico de expertos en procesos de manufactura médica en un entorno regulado por la FDA.</li>
+            <li>Elaboré dashboards en Power BI para monitoreo de indicadores y apoyo a la toma de decisiones en operaciones.</li>
+            <li>Traduje y creé nuevos procedimientos de manufactura, contribuyendo a la estandarización de procesos de producción.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal rd2">
+        <span class="tl-date">Nov. 2024 — Sept. 2025</span>
+        <div>
+          <div class="tl-role">CAD Designer</div>
+          <div class="tl-org">ALIGN TECHNOLOGY · CARTAGO, CR</div>
+          <ul class="tl-bullets">
+            <li>Modelado 3D de dispositivos ortodónticos médicos bajo estándares de precisión y calidad de clase mundial.</li>
+            <li>Trabajo en entorno de producción de alto volumen con énfasis en atención al detalle y cumplimiento de especificaciones técnicas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal rd3">
+        <span class="tl-date">Sept. 2020 — Jun. 2022</span>
+        <div>
+          <div class="tl-role">Technical Support Advisor · Floor Support</div>
+          <div class="tl-org">CONCENTRIX · COSTA RICA</div>
+          <ul class="tl-bullets">
+            <li>Brindé soporte técnico bilingüe (español/inglés) a clientes internacionales en resolución de incidencias de software y hardware.</li>
+            <li>Promovido a Floor Support: asistencia en tiempo real a asesores en piso, resolviendo escalaciones durante operaciones en vivo.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="credentials">
+    <div class="section-label reveal">Formación</div>
+    <h2 class="cred-headline reveal rd1">Educación y certificaciones</h2>
+    <div class="cred-grid">
+      <div>
+        <div class="cred-block-title reveal">Educación</div>
+        <div class="edu-item reveal rd1">
+          <div class="edu-degree">Ingeniería Informática (Bachelor's) — Título en trámite</div>
+          <div class="edu-org">Universidad Estatal a Distancia (UNED) · Costa Rica</div>
+          <div class="edu-note">Ene. 2024 – Dic. 2026 (esperado) · TFG en desarrollo de ERP con Oracle APEX</div>
+        </div>
+        <div class="edu-item reveal rd2">
+          <div class="edu-degree">Diplomatura en Informática</div>
+          <div class="edu-org">Universidad Estatal a Distancia (UNED) · Costa Rica</div>
+          <div class="edu-note">Sept. 2022 – Ene. 2024 · Programación, Redes y Base de Datos</div>
+          <span class="honor-badge">🏅 Graduación de Honor — nov. 2024</span>
+        </div>
+      </div>
+      <div>
+        <div class="cred-block-title reveal">Certificaciones</div>
+        <ul class="cert-list reveal rd1">
+          <li>AWS Certified Cloud Practitioner<span class="cert-meta">Amazon Web Services · dic. 2023 · vigente hasta dic. 2026</span></li>
+          <li>AWS re/Start Graduate<span class="cert-meta">Amazon Web Services · dic. 2023</span></li>
+          <li>Cybersecurity Fundamentals<span class="cert-meta">IBM SkillsBuild · ago. 2025 · vigente hasta dic. 2035</span></li>
+          <li>Networking Basics<span class="cert-meta">Cisco · mar. 2023</span></li>
+          <li>Introduction to Cybersecurity<span class="cert-meta">Cisco · mar. 2023</span></li>
+          <li>Python Essentials 1<span class="cert-meta">Cisco · abr. 2023</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-label reveal">Stack</div>
+    <h2 class="skills-headline reveal rd1">Habilidades técnicas</h2>
+    <div class="skills-grid">
+      <div class="reveal">
+        <div class="skill-group-title">Core</div>
+        <div class="skill-tags">
+          <span class="tag">Oracle APEX</span><span class="tag">PL/SQL</span><span class="tag">SQL</span>
+        </div>
+      </div>
+      <div class="reveal rd1">
+        <div class="skill-group-title">Cloud & Infra</div>
+        <div class="skill-tags">
+          <span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">Linux</span><span class="tag">Git</span>
+        </div>
+      </div>
+      <div class="reveal rd1">
+        <div class="skill-group-title">Frontend</div>
+        <div class="skill-tags">
+          <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">GSAP</span>
+        </div>
+      </div>
+      <div class="reveal rd2">
+        <div class="skill-group-title">Datos & BI</div>
+        <div class="skill-tags">
+          <span class="tag">Power BI</span><span class="tag">Python</span><span class="tag">Excel</span>
+        </div>
+      </div>
+      <div class="reveal rd2">
+        <div class="skill-group-title">Otros</div>
+        <div class="skill-tags">
+          <span class="tag">C# / .NET</span><span class="tag">Java</span><span class="tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="reveal rd3">
+        <div class="skill-group-title">Idiomas</div>
+        <div class="lang-row"><span>Español</span><span>Nativo</span></div>
+        <div class="lang-row"><span>Inglés</span><span>Profesional B2+</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="own-projects">
+    <div class="section-label reveal">Proyectos personales publicados</div>
+    <h2 class="op-headline reveal rd1">Fuera de Nextek, sigo construyendo.</h2>
+    <div class="op-grid">
+      <div class="op-card reveal">
+        <div class="op-name">FacturaCR · ContaPyme · Sobres · Mosto</div>
+        <p class="op-desc">Herramientas web funcionales para facturación, cálculo de planilla y presupuesto personal. Desplegadas en Vercel.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label reveal">Contacto</div>
+      <h2 class="contact-headline reveal rd1">Hablemos.</h2>
+      <p class="contact-sub reveal rd2">Disponible para nuevos proyectos y oportunidades.</p>
+      <div class="contact-links reveal rd3">
+        <a href="mailto:janrosky@gmail.com" id="link-email" class="contact-link">
+          <span>✉️ &nbsp;janrosky@gmail.com</span><span class="cl-arrow">→</span>
+        </a>
+        <a href="https://www.linkedin.com/in/chaconjky" target="_blank" rel="noopener" class="contact-link">
+          <span>💼 &nbsp;linkedin.com/in/chaconjky</span><span class="cl-arrow">→</span>
+        </a>
+        <a href="https://github.com/Janrosky" target="_blank" rel="noopener" class="contact-link">
+          <span>⌨️ &nbsp;github.com/Janrosky</span><span class="cl-arrow">→</span>
+        </a>
+        <a href="tel:+50683504511" class="contact-link">
+          <span>📞 &nbsp;+506 8350-4511</span><span class="cl-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-copy">© 2026 Alejandro Chacón Garita.</span>
+    <span class="footer-note"><a href="index.html">← Volver al sitio de Nextek</a></span>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 60));
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
