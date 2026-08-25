@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nextek — Software a la medida para tu empresa</title>
+  <meta name="description" content="Nextek S.A. desarrolla sistemas ERP, dashboards y automatización de procesos para PYMEs en Costa Rica. Oracle APEX, Power BI y desarrollo web a la medida." />
+  <meta property="og:title" content="Nextek — Software a la medida para tu empresa" />
+  <meta property="og:description" content="Sistemas ERP, dashboards de datos y automatización de procesos para empresas que quieren crecer con tecnología hecha a medida." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050508;
+      --bg2: #0a0a10;
+      --fg: #e8e8f0;
+      --muted: rgba(232,232,240,0.42);
+      --accent: #DB2955;
+      --accent-rgb: 219,41,85;
+      --accent2: #ff6b6b;
+      --accent3: #00d4aa;
+      --border: rgba(255,255,255,0.08);
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    em, .accent-script {
+      font-style: italic;
+      font-family: var(--font-display);
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ── CURSOR ── */
+    #cursor-dot, #cursor-ring {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      z-index: 99999;
+      top: 0; left: 0;
+    }
+    #cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      margin: -4px 0 0 -4px;
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(var(--accent-rgb),0.55);
+      margin: -18px 0 0 -18px;
+      transition: width .3s, height .3s, margin .3s, border-color .3s;
+    }
+    body.hovered #cursor-ring {
+      width: 56px; height: 56px;
+      margin: -28px 0 0 -28px;
+      border-color: rgba(var(--accent-rgb),0.9);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 9000;
+      padding: 1.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid transparent;
+      transition: border-color .4s, backdrop-filter .4s, background .4s;
+    }
+    nav.scrolled {
+      border-color: var(--border);
+      backdrop-filter: blur(24px);
+      background: rgba(5,5,8,.75);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 1.15rem; letter-spacing: -.01em;
+      color: var(--fg); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: .875rem; color: var(--muted);
+      text-decoration: none; transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-cta {
+      font-size: .875rem; font-weight: 500;
+      color: var(--fg);
+      background: rgba(var(--accent-rgb),.15);
+      border: 1px solid rgba(var(--accent-rgb),.4);
+      padding: .5rem 1.25rem; border-radius: 100px;
+      text-decoration: none; display: inline-block;
+      transition: background .25s, border-color .25s;
+    }
+    .nav-cta:hover { background: rgba(var(--accent-rgb),.3); border-color: var(--accent); }
+
+    /* ── MOBILE NAV TOGGLE ── */
+    .nav-toggle {
+      display: none;
+      width: 24px; height: 18px;
+      position: relative;
+      background: none; border: none; cursor: pointer;
+      z-index: 9500;
+    }
+    .nav-toggle span {
+      position: absolute; left: 0; width: 100%; height: 1.5px;
+      background: var(--fg); transition: transform .3s, opacity .3s, top .3s;
+    }
+    .nav-toggle span:nth-child(1) { top: 0; }
+    .nav-toggle span:nth-child(2) { top: 8px; }
+    .nav-toggle span:nth-child(3) { top: 16px; }
+    .nav-toggle.open span:nth-child(1) { top: 8px; transform: rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { top: 8px; transform: rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 9200;
+      background: rgba(5,5,8,.98); backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s ease;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu a {
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+      color: var(--fg); text-decoration: none;
+    }
+    .mobile-menu a.mm-cta { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 3rem;
+      position: relative; overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 0;
+    }
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(100px); pointer-events: none; z-index: 1;
+    }
+    .orb-1 { width: 600px; height: 600px; background: rgba(var(--accent-rgb),.12); top: -200px; right: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: rgba(0,212,170,.07); bottom: -100px; left: 10%; }
+
+    .hero-inner { position: relative; z-index: 2; max-width: 900px; }
+    .hero-top-row {
+      display: flex; align-items: center; gap: 1.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .hero-logo {
+      width: clamp(64px, 8vw, 96px); height: clamp(64px, 8vw, 96px);
+      flex-shrink: 0; object-fit: contain;
+      filter: drop-shadow(0 0 24px rgba(var(--accent-rgb),.25));
+    }
+    .hero-logo-fallback {
+      width: clamp(64px, 8vw, 96px); height: clamp(64px, 8vw, 96px);
+      flex-shrink: 0; border-radius: 20px;
+      border: 1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.02);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 1.1rem; color: var(--muted); letter-spacing: -.02em;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: .78rem; color: var(--accent);
+      letter-spacing: .15em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800; line-height: 1; letter-spacing: -.03em;
+      margin-bottom: 1.75rem;
+    }
+    .hero-headline .accent { color: var(--accent); }
+    .hero-headline .line { overflow: hidden; display: block; }
+    .hero-headline .line-inner { display: block; }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: var(--muted); max-width: 540px;
+      line-height: 1.8; margin-bottom: 3rem;
+      text-align: justify; text-align-last: left;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      font-weight: 500; font-size: .95rem;
+      padding: .875rem 2rem; border-radius: 100px;
+      background: var(--accent); color: #fff;
+      text-decoration: none; display: inline-block;
+      box-shadow: 0 0 32px rgba(var(--accent-rgb),.35);
+      transition: box-shadow .3s;
+    }
+    .btn-primary:hover { box-shadow: 0 0 52px rgba(var(--accent-rgb),.6); }
+    .btn-secondary {
+      font-size: .95rem; padding: .875rem 2rem; border-radius: 100px;
+      border: 1px solid var(--border); color: var(--muted);
+      text-decoration: none; display: inline-block;
+      transition: color .25s, border-color .25s;
+    }
+    .btn-secondary:hover { color: var(--fg); border-color: rgba(255,255,255,.25); }
+
+    .scroll-indicator {
+      position: absolute; bottom: 2.5rem; left: 3rem;
+      display: flex; align-items: center; gap: .75rem;
+      font-family: var(--font-mono); font-size: .7rem;
+      color: var(--muted); letter-spacing: .1em;
+    }
+    .scroll-line { width: 40px; height: 1px; background: var(--muted); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: clamp(80px,12vw,140px) 3rem; }
+    .section-label {
+      font-family: var(--font-mono); font-size: .72rem; color: var(--accent);
+      letter-spacing: .15em; text-transform: uppercase; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .section-label::before { content:''; display:block; width:24px; height:1px; background:var(--accent); }
+
+    /* ── ABOUT (empresa) ── */
+    #about { border-top: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; max-width: 1100px; }
+    .about-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem,4vw,3.5rem); font-weight: 700;
+      line-height: 1.1; letter-spacing: -.025em; margin-bottom: 1.5rem;
+    }
+    .about-text { font-size: 1.05rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; text-align: justify; text-align-last: left; }
+    .about-text strong { color: var(--fg); font-weight: 500; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+    .tag { font-family: var(--font-mono); font-size: .75rem; padding: .35rem .85rem; border-radius: 100px; border: 1px solid var(--border); color: var(--muted); }
+    .about-visual { position: relative; height: 420px; display: flex; align-items: center; justify-content: center; }
+    .about-card {
+      position: absolute; background: rgba(255,255,255,.03);
+      border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem 2rem; backdrop-filter: blur(10px);
+    }
+    .about-card.card-1 { top: 0; left: 0; width: 200px; }
+    .about-card.card-2 { bottom: 0; right: 0; width: 210px; }
+    .about-card.card-3 { top: 50%; left: 50%; transform: translate(-50%,-50%); width: 220px; }
+    .card-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1; }
+    .card-label { font-size: .8rem; color: var(--muted); margin-top: .25rem; }
+
+    .about-founder-link {
+      margin-top: 2.25rem; display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--font-mono); font-size: .8rem; color: var(--fg);
+      text-decoration: none; padding: .7rem 1.1rem;
+      border: 1px solid var(--border); border-radius: 100px;
+      transition: border-color .25s, background .25s;
+    }
+    .about-founder-link:hover { border-color: var(--accent); background: rgba(var(--accent-rgb),.08); }
+
+    /* ── SERVICES ── */
+    #services { border-top: 1px solid var(--border); background: var(--bg2); }
+    .services-header { max-width: 700px; margin-bottom: 4rem; }
+    .services-headline {
+      font-family: var(--font-display); font-size: clamp(2rem,4vw,3.25rem);
+      font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 1rem;
+    }
+    .services-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; text-align: justify; text-align-last: left; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+    }
+    .service-card {
+      background: rgba(255,255,255,.02); padding: 2.5rem;
+      position: relative; overflow: hidden; transition: background .3s;
+    }
+    .service-card::before {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(135deg,rgba(var(--accent-rgb),.08),transparent);
+      opacity:0; transition: opacity .4s;
+    }
+    .service-card:hover { background: rgba(255,255,255,.04); }
+    .service-card:hover::before { opacity: 1; }
+    .srb { border-right: 1px solid var(--border); }
+    .sbb { border-bottom: 1px solid var(--border); }
+    .service-icon { font-size: 1.75rem; margin-bottom: 1.25rem; display: block; }
+    .service-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: .75rem; }
+    .service-desc { font-size: .9rem; color: var(--muted); line-height: 1.75; text-align: justify; text-align-last: left; }
+
+    /* ── PORTFOLIO ── */
+    #portfolio { border-top: 1px solid var(--border); }
+    .portfolio-header { max-width: 720px; margin-bottom: 4rem; }
+    .portfolio-headline {
+      font-family: var(--font-display); font-size: clamp(2rem,4vw,3.25rem);
+      font-weight: 700; letter-spacing: -.025em; line-height: 1.15; margin-bottom: 1rem;
+    }
+    .portfolio-grid {
+      display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem;
+    }
+    .project-card {
+      border: 1px solid var(--border); border-radius: 20px;
+      overflow: hidden; text-decoration: none; color: var(--fg);
+      background: rgba(255,255,255,.015);
+      display: flex; flex-direction: column;
+      transition: border-color .3s, transform .3s, background .3s;
+    }
+    .project-card:hover { border-color: rgba(var(--accent-rgb),.5); transform: translateY(-4px); background: rgba(255,255,255,.03); }
+
+    .project-frame {
+      position: relative; aspect-ratio: 16/10;
+      background: linear-gradient(160deg, var(--bg2), var(--bg));
+      overflow: hidden;
+    }
+    .project-frame .browser-bar {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .7rem .9rem; border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,.02);
+    }
+    .browser-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.15); }
+    .browser-url {
+      font-family: var(--font-mono); font-size: .68rem; color: var(--muted);
+      margin-left: .5rem; padding: .2rem .6rem; border-radius: 100px;
+      background: rgba(255,255,255,.03); border: 1px solid var(--border);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .project-mock {
+      position: relative; height: calc(100% - 34px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.75rem;
+    }
+    .project-mock-glyph {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 3.5rem; letter-spacing: -.03em;
+      opacity: .9;
+    }
+    .project-mock::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(var(--accent-rgb),.1), transparent 60%);
+      pointer-events: none;
+    }
+    .project-thumb {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      transition: transform .5s ease;
+    }
+    .project-card:hover .project-thumb { transform: scale(1.04); }
+
+    .project-body { padding: 1.75rem; display: flex; flex-direction: column; gap: .75rem; flex: 1; }
+    .project-tag {
+      font-family: var(--font-mono); font-size: .68rem; color: var(--accent);
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+    .project-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; }
+    .project-desc { font-size: .875rem; color: var(--muted); line-height: 1.7; flex: 1; text-align: justify; text-align-last: left; }
+    .project-link-row {
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-mono); font-size: .75rem; color: var(--fg);
+      padding-top: .5rem; border-top: 1px solid var(--border);
+    }
+    .project-link-row .arrow { color: var(--accent); transition: transform .25s; }
+    .project-card:hover .project-link-row .arrow { transform: translateX(4px); }
+
+    /* ── PROCESS ── */
+    #process { border-top: 1px solid var(--border); background: var(--bg2); }
+    .process-headline {
+      font-family: var(--font-display); font-size: clamp(2rem,4vw,3.25rem);
+      font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 1rem;
+    }
+    .steps { display: flex; flex-direction: column; max-width: 800px; margin-top: 4rem; }
+    .step { display: grid; grid-template-columns: 80px 1fr; gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--font-mono); font-size: .72rem; color: var(--accent); letter-spacing: .1em; padding-top: .2rem; }
+    .step-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-desc { font-size: .925rem; color: var(--muted); line-height: 1.75; text-align: justify; text-align-last: left; }
+
+    /* ── CONTACT ── */
+    #contact { border-top: 1px solid var(--border); }
+    .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .contact-headline {
+      font-family: var(--font-display); font-size: clamp(2.5rem,5vw,4.5rem);
+      font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.5rem;
+    }
+    .contact-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 3rem; text-align: justify; text-align-last: center; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
+    .contact-link {
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--font-mono); font-size: .85rem; color: var(--muted);
+      text-decoration: none; padding: 1rem 2rem;
+      border: 1px solid var(--border); border-radius: 12px;
+      width: 100%; max-width: 440px;
+      transition: border-color .25s, color .25s, background .25s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--fg); background: rgba(var(--accent-rgb),.06); }
+    .cl-arrow { color: var(--accent); }
+
+    .contact-divider {
+      display: flex; align-items: center; gap: 1rem;
+      width: 100%; max-width: 440px; margin: 2.5rem 0;
+      font-family: var(--font-mono); font-size: .7rem; color: var(--muted);
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    .contact-divider::before, .contact-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .wa-form {
+      width: 100%; max-width: 480px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 1rem;
+      text-align: left;
+    }
+    .wa-field { display: flex; flex-direction: column; gap: .5rem; }
+    .wa-field label {
+      font-family: var(--font-mono); font-size: .72rem; color: var(--muted);
+      letter-spacing: .08em; text-transform: uppercase;
+    }
+    .wa-field input, .wa-field select, .wa-field textarea {
+      width: 100%; background: rgba(255,255,255,.03);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: .85rem 1rem; color: var(--fg);
+      font-family: var(--font-body); font-size: .9rem;
+      transition: border-color .25s, background .25s;
+    }
+    .wa-field select { cursor: pointer; }
+    .wa-field select option { background: var(--bg2); color: var(--fg); }
+    .wa-field textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+    .wa-field input:focus, .wa-field select:focus, .wa-field textarea:focus {
+      outline: none; border-color: var(--accent); background: rgba(255,255,255,.05);
+    }
+    .wa-submit {
+      display: flex; align-items: center; justify-content: center; gap: .6rem;
+      font-family: var(--font-body); font-weight: 500; font-size: .95rem;
+      padding: .95rem 2rem; border-radius: 100px; border: none;
+      background: var(--accent); color: #fff; cursor: pointer;
+      box-shadow: 0 0 32px rgba(var(--accent-rgb),.35);
+      transition: box-shadow .3s, transform .15s;
+      margin-top: .5rem;
+    }
+    .wa-submit:hover { box-shadow: 0 0 52px rgba(var(--accent-rgb),.6); }
+    .wa-submit:active { transform: scale(.98); }
+    .wa-note {
+      font-family: var(--font-mono); font-size: .72rem; color: var(--muted);
+      text-align: center; margin-top: .25rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy, .footer-note { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+    .footer-note span { color: var(--accent); }
+    .footer-note a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; transition: color .2s; }
+    .footer-note a:hover { color: var(--fg); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .rd1 { transition-delay: .1s; } .rd2 { transition-delay: .2s; } .rd3 { transition-delay: .3s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+      section { padding: 60px 1.5rem; }
+      #hero { padding: 0 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { display: none; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card.srb { border-right: none; }
+      .service-card { border-bottom: 1px solid var(--border); }
+      .service-card:last-child { border-bottom: none; }
+      .scroll-indicator { left: 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: .5rem; text-align: center; }
+      body { cursor: auto; }
+      #cursor-dot, #cursor-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">NEX<span>TEK</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Nosotros</a></li>
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#portfolio">Proyectos</a></li>
+      <li><a href="#process">Proceso</a></li>
+      <li><a href="#contact">Contacto</a></li>
+      <li><a href="founder.html">Fundador</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Hablemos →</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">Nosotros</a>
+    <a href="#services">Servicios</a>
+    <a href="#portfolio">Proyectos</a>
+    <a href="#process">Proceso</a>
+    <a href="founder.html">Fundador</a>
+    <a href="#contact" class="mm-cta">Hablemos →</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="hero-inner">
+      <div class="hero-top-row">
+        <img class="hero-logo" src="images/nextek-logo.png" alt="Logo de Nextek"
+             onerror="this.style.display='none'; document.getElementById('heroLogoFallback').style.display='flex';">
+        <div id="heroLogoFallback" class="hero-logo-fallback" style="display:none;">NX</div>
+        <p class="hero-eyebrow" style="margin-bottom:0;">Nextek S.A. · Cartago, Costa Rica</p>
+      </div>
+      <h1 class="hero-headline">
+        <span class="line"><span class="line-inner">Software que</span></span>
+        <span class="line"><span class="line-inner"><span class="accent">resuelve</span></span></span>
+        <span class="line"><span class="line-inner">problemas reales.</span></span>
+      </h1>
+      <p class="hero-sub">
+        Desarrollamos sistemas ERP, dashboards de datos y automatización de procesos para empresas que quieren crecer con tecnología hecha a medida.
+      </p>
+      <div class="hero-ctas">
+        <a href="#services" class="btn-primary">Ver servicios</a>
+        <a href="#contact" class="btn-secondary">Contacto directo</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span class="scroll-line"></span>
+      <span>scroll</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">Quiénes somos</div>
+    <div class="about-grid">
+      <div>
+        <h2 class="about-headline reveal">Tecnología que se construye con <em>propósito</em>.</h2>
+        <p class="about-text reveal rd1">
+          <strong>Nextek</strong> es un estudio de desarrollo de software costarricense enfocado en convertir procesos empresariales complejos en soluciones claras — desde la base de datos hasta la interfaz final.
+        </p>
+        <p class="about-text reveal rd2">
+          Combinamos <strong>ingeniería de procesos, desarrollo de software y consultoría IT</strong> para PYMEs que necesitan sistemas a la medida, no plantillas genéricas.
+        </p>
+        <div class="about-tags reveal rd3">
+          <span class="tag">Oracle APEX</span>
+          <span class="tag">PL/SQL</span>
+          <span class="tag">C#.NET</span>
+          <span class="tag">SQL</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">AWS · Azure</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Metodologías Ágiles</span>
+        </div>
+        <a href="founder.html" class="about-founder-link reveal rd3">
+          <span>Conoce al fundador →</span>
+        </a>
+      </div>
+      <div class="about-visual reveal rd2">
+        <div class="about-card card-3">
+          <div class="card-num">3+</div>
+          <div class="card-label">años en tecnología</div>
+        </div>
+        <div class="about-card card-1">
+          <div class="card-num" style="color:var(--accent3)">4</div>
+          <div class="card-label">proyectos activos</div>
+        </div>
+        <div class="about-card card-2">
+          <div class="card-num" style="color:var(--accent2)">100%</div>
+          <div class="card-label">soluciones a medida</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header">
+      <div class="section-label reveal">Servicios</div>
+      <h2 class="services-headline reveal rd1">Todo lo que tu empresa necesita para digitalizar sus procesos.</h2>
+      <p class="services-sub reveal rd2">Trabajamos de principio a fin: análisis, diseño, desarrollo e implementación. Sin dependencias externas innecesarias.</p>
+    </div>
+    <div class="services-grid reveal rd1">
+      <div class="service-card srb sbb">
+        <span class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>
+        </span>
+        <div class="service-name">Sistemas ERP & Oracle APEX</div>
+        <div class="service-desc">Desarrollo de sistemas empresariales personalizados con Oracle APEX y PL/SQL. Módulos de ventas, compras, contabilidad, inventario y más.</div>
+      </div>
+      <div class="service-card srb sbb">
+        <span class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </span>
+        <div class="service-name">Dashboards & Datos</div>
+        <div class="service-desc">Visualización de datos en tiempo real para toma de decisiones con Power BI. Dashboards de manufactura, KPIs operativos y reportes automáticos.</div>
+      </div>
+      <div class="service-card sbb">
+        <span class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </span>
+        <div class="service-name">Automatización de Procesos</div>
+        <div class="service-desc">Identificación y eliminación de cuellos de botella. Automatización de flujos, reportes y tareas repetitivas en entornos industriales y comerciales.</div>
+      </div>
+      <div class="service-card srb">
+        <span class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </span>
+        <div class="service-name">Consultoría IT para PYMEs</div>
+        <div class="service-desc">Acompañamiento estratégico para empresas en proceso de digitalización: herramientas, procesos y arquitectura tecnológica adaptada a tu escala.</div>
+      </div>
+      <div class="service-card srb">
+        <span class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        <div class="service-name">Desarrollo Web & Apps</div>
+        <div class="service-desc">Aplicaciones web modernas, landing pages y herramientas internas. Stack: JavaScript, Tailwind CSS — deployable en Vercel, AWS o Azure.</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </span>
+        <div class="service-name">Documentación & Procedimientos</div>
+        <div class="service-desc">Redacción de SOPs, manuales técnicos y documentación de procesos para entornos regulados (ISO, FDA, GMP) o equipos en crecimiento.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="portfolio-header">
+      <div class="section-label reveal">Portafolio</div>
+      <h2 class="portfolio-headline reveal rd1">Proyectos que <em>hablan</em> por nosotros.</h2>
+      <p class="services-sub reveal rd2">Cada sitio está construido, desplegado y en producción — no son mockups.</p>
+    </div>
+    <div class="portfolio-grid">
+
+      <a href="https://factura-electronica-jky.vercel.app/" target="_blank" rel="noopener" class="project-card reveal">
+        <div class="project-frame">
+          <div class="browser-bar">
+            <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+            <span class="browser-url">factura-electronica-jky.vercel.app</span>
+          </div>
+          <div class="project-mock">
+            <span class="project-mock-glyph" style="color:var(--accent3)">FCR</span>
+            <img class="project-thumb" src="images/facturacr.png" alt="Captura de FacturaCR" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">Sistema de Facturación</span>
+          <div class="project-name">FacturaCR</div>
+          <p class="project-desc">Facturación electrónica para PYMEs costarricenses: generación de comprobantes, control de clientes y reportes, alineado a los requisitos fiscales de Costa Rica.</p>
+          <div class="project-link-row">
+            <span>Ver proyecto</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://conta-pyme-steel.vercel.app/" target="_blank" rel="noopener" class="project-card reveal rd1">
+        <div class="project-frame">
+          <div class="browser-bar">
+            <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+            <span class="browser-url">conta-pyme-steel.vercel.app</span>
+          </div>
+          <div class="project-mock">
+            <span class="project-mock-glyph">CP</span>
+            <img class="project-thumb" src="images/contapyme.png" alt="Captura de ContaPyme" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">ERP Contable</span>
+          <div class="project-name">ContaPyme</div>
+          <p class="project-desc">Libro contable digital de partida doble para pequeños negocios: plan de cuentas, asientos automáticos y respaldo en Excel, todo en una sola app sin instalación.</p>
+          <div class="project-link-row">
+            <span>Ver proyecto</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://mar-villa-deco.vercel.app/" target="_blank" rel="noopener" class="project-card reveal rd2">
+        <div class="project-frame">
+          <div class="browser-bar">
+            <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+            <span class="browser-url">mar-villa-deco.vercel.app</span>
+          </div>
+          <div class="project-mock">
+            <span class="project-mock-glyph" style="color:var(--accent2)">MV</span>
+            <img class="project-thumb" src="images/marvilla.png" alt="Captura de Mar-Villa Deco" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">Landing · Eventos</span>
+          <div class="project-name">Mar-Villa Deco</div>
+          <p class="project-desc">Sitio de marca para una empresa de decoración de eventos en Cartago: galería, testimonios y formulario de cotización conectado directo a WhatsApp.</p>
+          <div class="project-link-row">
+            <span>Ver proyecto</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://icb-soluciones.vercel.app/" target="_blank" rel="noopener" class="project-card reveal rd3">
+        <div class="project-frame">
+          <div class="browser-bar">
+            <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+            <span class="browser-url">icb-soluciones.vercel.app</span>
+          </div>
+          <div class="project-mock">
+            <span class="project-mock-glyph">ICB</span>
+            <img class="project-thumb" src="images/icb.png" alt="Captura de ICB Soluciones Industriales" onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">Landing · Industrial</span>
+          <div class="project-name">ICB Soluciones Industriales</div>
+          <p class="project-desc">Sitio corporativo para una empresa de ingeniería industrial: áreas de especialidad, proceso de trabajo y contacto directo, con un tono técnico y confiable.</p>
+          <div class="project-link-row">
+            <span>Ver proyecto</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="section-label reveal">Proceso</div>
+    <h2 class="process-headline reveal rd1">Cómo trabajamos contigo.</h2>
+    <p class="services-sub reveal rd2">Sin metodologías de agencia. Comunicación directa, entregas claras y código que funciona desde el día uno.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="step-num">01 — Descubrimiento</span>
+        <div>
+          <div class="step-title">Entendemos tu problema</div>
+          <div class="step-desc">Escuchamos cómo funciona tu empresa hoy, qué duele más y qué quieres lograr. Sin asumir, sin proponer de más.</div>
+        </div>
+      </div>
+      <div class="step reveal rd1">
+        <span class="step-num">02 — Diseño</span>
+        <div>
+          <div class="step-title">Arquitectura de la solución</div>
+          <div class="step-desc">Propuesta técnica clara: módulos, base de datos, flujos y tecnologías. Aprobamos juntos antes de escribir una línea de código.</div>
+        </div>
+      </div>
+      <div class="step reveal rd2">
+        <span class="step-num">03 — Desarrollo</span>
+        <div>
+          <div class="step-title">Construcción iterativa</div>
+          <div class="step-desc">Trabajamos en ciclos cortos con entregas visibles. Puedes ver el avance, dar retroalimentación y ajustar en tiempo real.</div>
+        </div>
+      </div>
+      <div class="step reveal rd3">
+        <span class="step-num">04 — Entrega</span>
+        <div>
+          <div class="step-title">Deploy, documentación y soporte</div>
+          <div class="step-desc">El sistema se entrega funcionando, documentado y con capacitación. No desaparecemos al firmar — el soporte post-entrega es parte del trato.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label reveal" style="justify-content:center;margin-bottom:1.5rem;">Contacto</div>
+      <h2 class="contact-headline reveal rd1">¿Tienes un proyecto en mente?</h2>
+      <p class="contact-sub reveal rd2">Cuéntanos lo que necesitas. Respondemos rápido y hablamos claro. Sin formularios largos, sin burocracia.</p>
+
+      <form class="wa-form reveal rd3" id="quoteForm">
+        <div class="wa-field">
+          <label for="q-name">Nombre</label>
+          <input type="text" id="q-name" placeholder="Tu nombre completo" required />
+        </div>
+        <div class="wa-field">
+          <label for="q-service">Servicio que necesitas</label>
+          <select id="q-service" required>
+            <option value="">Selecciona una opción</option>
+            <option>Sistemas ERP & Oracle APEX</option>
+            <option>Dashboards & Datos</option>
+            <option>Automatización de Procesos</option>
+            <option>Consultoría IT para PYMEs</option>
+            <option>Desarrollo Web & Apps</option>
+            <option>Documentación & Procedimientos</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="wa-field">
+          <label for="q-message">Cuéntanos sobre tu proyecto</label>
+          <textarea id="q-message" placeholder="Describe brevemente lo que necesitas..."></textarea>
+        </div>
+        <button type="submit" class="wa-submit">Enviar por WhatsApp →</button>
+        <p class="wa-note">Tu mensaje se enviará por WhatsApp al +506 8350-4511</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© 2026 Nextek S.A. Todos los derechos reservados.</span>
+    <span class="footer-note">Construido con <span>♥</span> en Cartago, Costa Rica. <a href="founder.html">Conoce al fundador →</a></span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    /* ── COTIZACIÓN VÍA WHATSAPP ── */
+    const WHATSAPP_NUMBER = '50683504511';
+    const quoteForm = document.getElementById('quoteForm');
+    if (quoteForm) {
+      quoteForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const name = document.getElementById('q-name').value.trim();
+        const service = document.getElementById('q-service').value.trim();
+        const message = document.getElementById('q-message').value.trim();
+
+        const lines = [
+          'Hola Nextek, me gustaría hablar sobre un proyecto:',
+          '',
+          `*Nombre:* ${name || 'No especificado'}`,
+          `*Servicio de interés:* ${service || 'No especificado'}`,
+          `*Detalles:* ${message || 'Sin mensaje adicional'}`,
+        ];
+
+        const text = encodeURIComponent(lines.join('\n'));
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+      });
+    }
+
+    /* ── MOBILE MENU ── */
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    /* ── SMOOTH SCROLL ── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        const target = document.querySelector(id);
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    /* ── NAV ── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ── REVEAL ON SCROLL ── */
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    /* ── CANVAS PARTICLES ── */
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, pts = [];
+
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 110; i++) {
+      pts.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 1.4 + 0.3,
+        vx: (Math.random() - .5) * .3,
+        vy: (Math.random() - .5) * .3,
+        a: Math.random() * .45 + .08
+      });
+    }
+
+    function drawCanvas() {
+      ctx.clearRect(0, 0, W, H);
+      pts.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(var(--accent-rgb),${p.a})`.replace('var(--accent-rgb)','219,41,85');
+        ctx.fill();
+      });
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 100) {
+            ctx.beginPath();
+            ctx.moveTo(pts[i].x, pts[i].y);
+            ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = `rgba(219,41,85,${.07 * (1 - d/100)})`;
+            ctx.lineWidth = .5; ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawCanvas);
+    }
+    drawCanvas();
+
+    /* ── HERO ANIMATIONS ── */
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from('.hero-top-row', { opacity:0, y:16, duration:.8, ease:'power3.out', delay:.1 });
+    gsap.from('.line-inner',   { y:'110%', duration:1.1, stagger:.12, ease:'power4.out', delay:.25 });
+    gsap.from('.hero-sub',     { opacity:0, y:16, duration:.9, ease:'power3.out', delay:.6 });
+    gsap.from('.hero-ctas',    { opacity:0, y:16, duration:.8, ease:'power3.out', delay:.8 });
+    gsap.from('.scroll-indicator', { opacity:0, duration:1, delay:1.2 });
+
+    /* ── CURSOR (desktop only) ── */
+    if (window.innerWidth >= 768) {
+      const dot  = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      let mx = 0, my = 0, rx = 0, ry = 0;
+
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top  = my + 'px';
+      });
+
+      (function loop() {
+        rx += (mx - rx) * .11;
+        ry += (my - ry) * .11;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(loop);
+      })();
+
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('hovered'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
+      });
+
+      /* orb parallax */
+      document.addEventListener('mousemove', e => {
+        const x = (e.clientX / W - .5) * 2;
+        const y = (e.clientY / H - .5) * 2;
+        gsap.to('.orb-1', { x: x*28, y: y*28, duration:2, ease:'power2.out' });
+        gsap.to('.orb-2', { x: x*-18, y: y*-18, duration:2.5, ease:'power2.out' });
+      });
+    }
+  </script>
+</body>
+</html>
