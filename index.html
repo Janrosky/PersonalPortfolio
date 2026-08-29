@@ -573,12 +573,17 @@
       font-family: var(--font-display); font-size: clamp(2rem,4vw,3.25rem);
       font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 1rem;
     }
-    .steps { display: flex; flex-direction: column; max-width: 800px; margin-top: 4rem; }
-    .step { display: grid; grid-template-columns: 80px 1fr; gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .steps { display:flex;flex-direction:column;max-width:920px;margin-top:4rem;position:relative; }
+    .steps-track { position:absolute;left:145px;top:42px;bottom:42px;width:1px;background:rgba(244,244,245,.12);z-index:0; }
+    .steps-progress { width:100%;height:0;background:linear-gradient(var(--accent),var(--accent2));box-shadow:0 0 14px rgba(var(--accent-rgb),.65); }
+    .step { display:grid;grid-template-columns:80px 82px 1fr;align-items:center;gap:1.5rem;min-height:170px;padding:2.5rem 0;border-bottom:1px solid var(--border);position:relative; }
     .step:last-child { border-bottom: none; }
     .step-num { font-family: var(--font-mono); font-size: .72rem; color: var(--accent); letter-spacing: .1em; padding-top: .2rem; }
     .step-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: .5rem; }
     .step-desc { font-size: .925rem; color: var(--muted); line-height: 1.75; text-align: left; }
+    .step-icon { position:relative;z-index:2;opacity:.3;transform:translateY(7px); }
+    .step-icon .circuit-icon { width:82px;height:82px;box-shadow:0 0 0 8px var(--bg2); }
+    .step-icon.active .circuit-icon { border-color:rgba(var(--accent-rgb),.7);background:rgba(var(--accent-rgb),.1);box-shadow:0 0 0 8px var(--bg2),0 0 30px rgba(var(--accent-rgb),.22); }
 
     .process-diagram {
       position:relative; max-width:980px; margin:4rem 0 1rem; padding:2.5rem 1.5rem;
@@ -752,6 +757,12 @@
       .circuit-track { left:50%;right:auto;top:10%;bottom:10%;width:1px;height:auto; }
       .circuit-progress { width:100%;height:0; }
       .circuit-nodes { grid-template-columns:1fr;gap:2.2rem; }
+      .steps { margin-top:3rem; }
+      .steps-track { left:95px;top:34px;bottom:34px; }
+      .step { grid-template-columns:48px 62px 1fr;gap:1rem;min-height:150px;padding:2rem 0; }
+      .step-icon .circuit-icon { width:62px;height:62px;border-radius:16px;box-shadow:0 0 0 6px var(--bg2);transform:scale(.8); }
+      .step-icon.active .circuit-icon { box-shadow:0 0 0 6px var(--bg2),0 0 24px rgba(var(--accent-rgb),.2); }
+      .step-num { font-size:.62rem;letter-spacing:.04em; }
       .scroll-indicator { left: 1.5rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: .5rem; text-align: center; }
       body { cursor: auto; }
@@ -999,18 +1010,11 @@
     <div class="section-label reveal">Proceso</div>
     <h2 class="process-headline reveal rd1">Un proceso claro de principio a continuidad.</h2>
     <p class="services-sub reveal rd2">Cada etapa tiene objetivos, entregables y decisiones visibles para mantener el alcance, la calidad y las expectativas bajo control.</p>
-    <div class="process-diagram reveal" aria-hidden="true">
-      <div class="circuit-track"><div class="circuit-progress"></div></div>
-      <div class="circuit-nodes">
-        <div class="circuit-node"><div class="circuit-icon icon-diagnosis"><i></i><i></i><i></i></div></div>
-        <div class="circuit-node"><div class="circuit-icon icon-design"><i></i><i></i><i></i></div></div>
-        <div class="circuit-node"><div class="circuit-icon icon-code"><i></i></div></div>
-        <div class="circuit-node"><div class="circuit-icon icon-launch"></div></div>
-      </div>
-    </div>
     <div class="steps">
+      <div class="steps-track" aria-hidden="true"><div class="steps-progress"></div></div>
       <div class="step reveal">
         <span class="step-num">01 — Diagnóstico</span>
+        <div class="step-icon" aria-hidden="true"><div class="circuit-icon icon-diagnosis"><i></i><i></i><i></i></div></div>
         <div>
           <div class="step-title">Entendemos la operación</div>
           <div class="step-desc">Mapeamos objetivos, usuarios, procesos, restricciones y riesgos antes de definir cualquier solución.</div>
@@ -1018,6 +1022,7 @@
       </div>
       <div class="step reveal rd1">
         <span class="step-num">02 — Diseño</span>
+        <div class="step-icon" aria-hidden="true"><div class="circuit-icon icon-design"><i></i><i></i><i></i></div></div>
         <div>
           <div class="step-title">Diseñamos la solución</div>
           <div class="step-desc">Definimos alcance, experiencia, arquitectura, integraciones y criterios de aceptación antes de construir.</div>
@@ -1025,6 +1030,7 @@
       </div>
       <div class="step reveal rd2">
         <span class="step-num">03 — Desarrollo</span>
+        <div class="step-icon" aria-hidden="true"><div class="circuit-icon icon-code"><i></i></div></div>
         <div>
           <div class="step-title">Construimos con visibilidad</div>
           <div class="step-desc">Entregamos avances revisables en ciclos cortos, validando funcionalidad y prioridades con las personas responsables.</div>
@@ -1032,6 +1038,7 @@
       </div>
       <div class="step reveal rd3">
         <span class="step-num">04 — Puesta en operación</span>
+        <div class="step-icon" aria-hidden="true"><div class="circuit-icon icon-launch"></div></div>
         <div>
           <div class="step-title">Implementamos y transferimos</div>
           <div class="step-desc">Publicamos, documentamos y transferimos conocimiento para asegurar una adopción ordenada y una continuidad responsable.</div>
@@ -1277,25 +1284,23 @@
     gsap.registerPlugin(ScrollTrigger);
 
     /* ── PROCESS CIRCUIT ── */
-    const processMotion = gsap.matchMedia();
+    const stepIcons = [...document.querySelectorAll('.step-icon')];
     if (motionReduced) {
-      gsap.set('.circuit-progress', { width:'100%', height:'100%' });
-      gsap.set('.circuit-node', { opacity:1, y:0 });
+      gsap.set('.steps-progress', { height:'100%' });
+      gsap.set(stepIcons, { opacity:1, y:0 });
+      stepIcons.forEach(icon => icon.classList.add('active'));
     } else {
-      processMotion.add('(min-width: 769px)', () => {
-        gsap.to('.circuit-progress', {
-          width:'100%', ease:'none',
-          scrollTrigger:{ trigger:'.process-diagram', start:'top 78%', end:'+=750', scrub:1.25 }
-        });
-        gsap.to('.circuit-node', {
-          opacity:1, y:0, stagger:.23, ease:'power2.out',
-          scrollTrigger:{ trigger:'.process-diagram', start:'top 78%', end:'+=720', scrub:1.1 }
-        });
+      gsap.to('.steps-progress', {
+        height:'100%', ease:'none',
+        scrollTrigger:{ trigger:'.steps', start:'top 72%', end:'+=750', scrub:1.25 }
       });
-      processMotion.add('(max-width: 768px)', () => {
-        gsap.timeline({ scrollTrigger:{ trigger:'.process-diagram', start:'top 82%', end:'+=620', scrub:1.25 } })
-          .to('.circuit-progress', { height:'100%', ease:'none', duration:1 }, 0)
-          .to('.circuit-node', { opacity:1, y:0, stagger:.23, duration:.18, ease:'power2.out' }, .08);
+      stepIcons.forEach(icon => {
+        ScrollTrigger.create({
+          trigger:icon.closest('.step'), start:'top 62%', end:'bottom 38%',
+          onEnter:() => { icon.classList.add('active'); gsap.to(icon,{opacity:1,y:0,duration:.45,ease:'power2.out'}); },
+          onEnterBack:() => { icon.classList.add('active'); gsap.to(icon,{opacity:1,y:0,duration:.45,ease:'power2.out'}); },
+          onLeaveBack:() => { icon.classList.remove('active'); gsap.to(icon,{opacity:.3,y:7,duration:.3}); }
+        });
       });
     }
 
