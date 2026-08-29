@@ -70,6 +70,10 @@
       margin: -28px 0 0 -28px;
       border-color: rgba(var(--accent-rgb),0.9);
     }
+    @media (min-width: 769px) and (pointer: fine) {
+      body { cursor: none; }
+      #cursor-dot, #cursor-ring { display: block; }
+    }
 
     /* ── NAV ── */
     nav {
@@ -1279,12 +1283,17 @@
       gsap.set('.circuit-node', { opacity:1, y:0 });
     } else {
       processMotion.add('(min-width: 769px)', () => {
-        gsap.timeline({ scrollTrigger:{ trigger:'.process-diagram', start:'top 78%', end:'bottom 42%', scrub:.7 } })
-          .to('.circuit-progress', { width:'100%', ease:'none', duration:1 }, 0)
-          .to('.circuit-node', { opacity:1, y:0, stagger:.23, duration:.18, ease:'power2.out' }, .08);
+        gsap.to('.circuit-progress', {
+          width:'100%', ease:'none',
+          scrollTrigger:{ trigger:'.process-diagram', start:'top 78%', end:'+=900', scrub:1.25 }
+        });
+        gsap.to('.circuit-node', {
+          opacity:1, y:0, stagger:.23, ease:'power2.out',
+          scrollTrigger:{ trigger:'.process-diagram', start:'top 78%', end:'+=720', scrub:1.1 }
+        });
       });
       processMotion.add('(max-width: 768px)', () => {
-        gsap.timeline({ scrollTrigger:{ trigger:'.process-diagram', start:'top 82%', end:'bottom 48%', scrub:.7 } })
+        gsap.timeline({ scrollTrigger:{ trigger:'.process-diagram', start:'top 82%', end:'+=620', scrub:1.25 } })
           .to('.circuit-progress', { height:'100%', ease:'none', duration:1 }, 0)
           .to('.circuit-node', { opacity:1, y:0, stagger:.23, duration:.18, ease:'power2.out' }, .08);
       });
@@ -1333,7 +1342,7 @@
     gsap.from('.scroll-indicator', { opacity:0, duration:1, delay:1.2 });
 
     /* ── CURSOR (desktop only) ── */
-    if (window.innerWidth >= 768) {
+    if (window.matchMedia('(min-width: 769px) and (pointer: fine)').matches) {
       const dot  = document.getElementById('cursor-dot');
       const ring = document.getElementById('cursor-ring');
       let mx = 0, my = 0, rx = 0, ry = 0;
