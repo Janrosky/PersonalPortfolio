@@ -1285,7 +1285,7 @@
       processMotion.add('(min-width: 769px)', () => {
         gsap.to('.circuit-progress', {
           width:'100%', ease:'none',
-          scrollTrigger:{ trigger:'.process-diagram', start:'top 78%', end:'+=900', scrub:1.25 }
+          scrollTrigger:{ trigger:'.process-diagram', start:'top 78%', end:'+=750', scrub:1.25 }
         });
         gsap.to('.circuit-node', {
           opacity:1, y:0, stagger:.23, ease:'power2.out',
