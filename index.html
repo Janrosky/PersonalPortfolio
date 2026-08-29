@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nextek — Software a la medida para tu empresa</title>
-  <meta name="description" content="Nextek S.A. desarrolla sistemas ERP, dashboards y automatización de procesos para PYMEs en Costa Rica. Oracle APEX, Power BI y desarrollo web a la medida." />
-  <meta property="og:title" content="Nextek — Software a la medida para tu empresa" />
-  <meta property="og:description" content="Sistemas ERP, dashboards de datos y automatización de procesos para empresas que quieren crecer con tecnología hecha a medida." />
+  <title>Nextek — Ingeniería de software y transformación operativa</title>
+  <meta name="description" content="Nextek diseña software empresarial, automatización y soluciones de datos para convertir procesos complejos en operaciones más claras y escalables." />
+  <meta property="og:title" content="Nextek — Ingeniería de software y transformación operativa" />
+  <meta property="og:description" content="Software empresarial, automatización y soluciones de datos construidas alrededor de cada operación." />
   <meta property="og:type" content="website" />
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,15 +14,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #050508;
-      --bg2: #0a0a10;
-      --fg: #e8e8f0;
-      --muted: rgba(232,232,240,0.42);
+      --bg: #050816;
+      --bg2: #0d1224;
+      --fg: #f4f4f5;
+      --muted: rgba(244,244,245,0.62);
       --accent: #DB2955;
       --accent-rgb: 219,41,85;
-      --accent2: #ff6b6b;
-      --accent3: #00d4aa;
-      --border: rgba(255,255,255,0.08);
+      --accent2: #E6406C;
+      --accent3: #a1a1aa;
+      --border: rgba(244,244,245,0.10);
       --font-display: 'Space Grotesk', sans-serif;
       --font-body: 'DM Sans', sans-serif;
       --font-mono: 'DM Mono', monospace;
@@ -36,7 +36,7 @@
       color: var(--fg);
       font-family: var(--font-body);
       overflow-x: hidden;
-      cursor: none;
+      cursor: auto;
     }
 
     em, .accent-script {
@@ -52,7 +52,7 @@
       pointer-events: none;
       border-radius: 50%;
       z-index: 99999;
-      top: 0; left: 0;
+      top: 0; left: 0; display: none;
     }
     #cursor-dot {
       width: 8px; height: 8px;
@@ -83,11 +83,11 @@
     nav.scrolled {
       border-color: var(--border);
       backdrop-filter: blur(24px);
-      background: rgba(5,5,8,.75);
+      background: rgba(5,8,22,.82);
     }
     .nav-logo {
       font-family: var(--font-display);
-      font-weight: 800; font-size: 1.15rem; letter-spacing: -.01em;
+      font-weight: 700; font-size: 1.15rem; letter-spacing: -.035em;
       color: var(--fg); text-decoration: none;
     }
     .nav-logo span { color: var(--accent); }
@@ -129,7 +129,7 @@
 
     .mobile-menu {
       position: fixed; inset: 0; z-index: 9200;
-      background: rgba(5,5,8,.98); backdrop-filter: blur(20px);
+      background: rgba(5,8,22,.98); backdrop-filter: blur(20px);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 2rem;
       opacity: 0; pointer-events: none;
@@ -165,19 +165,24 @@
       display: flex; align-items: center; gap: 1.75rem;
       margin-bottom: 1.75rem;
     }
-    .hero-logo {
-      width: clamp(64px, 8vw, 96px); height: clamp(64px, 8vw, 96px);
-      flex-shrink: 0; object-fit: contain;
-      filter: drop-shadow(0 0 24px rgba(var(--accent-rgb),.25));
+    .hero-wordmark {
+      flex-shrink: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -.055em;
+      color: var(--fg);
+      line-height: 1;
     }
-    .hero-logo-fallback {
-      width: clamp(64px, 8vw, 96px); height: clamp(64px, 8vw, 96px);
-      flex-shrink: 0; border-radius: 20px;
-      border: 1px dashed rgba(255,255,255,.18);
-      background: rgba(255,255,255,.02);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display); font-weight: 800;
-      font-size: 1.1rem; color: var(--muted); letter-spacing: -.02em;
+    .hero-wordmark span { color: var(--accent); }
+    .hero-wordmark::after {
+      content: '';
+      display: block;
+      width: 38%; height: 3px;
+      margin-top: .55rem;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(var(--accent-rgb),.4);
     }
 
     .hero-eyebrow {
@@ -199,7 +204,7 @@
       font-size: clamp(1rem, 2vw, 1.15rem);
       color: var(--muted); max-width: 540px;
       line-height: 1.8; margin-bottom: 3rem;
-      text-align: justify; text-align-last: left;
+      text-align: left;
     }
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
 
@@ -246,7 +251,7 @@
       font-size: clamp(2rem,4vw,3.5rem); font-weight: 700;
       line-height: 1.1; letter-spacing: -.025em; margin-bottom: 1.5rem;
     }
-    .about-text { font-size: 1.05rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; text-align: justify; text-align-last: left; }
+    .about-text { font-size: 1.05rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem; text-align: left; }
     .about-text strong { color: var(--fg); font-weight: 500; }
     .about-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
     .tag { font-family: var(--font-mono); font-size: .75rem; padding: .35rem .85rem; border-radius: 100px; border: 1px solid var(--border); color: var(--muted); }
@@ -296,33 +301,186 @@
     }
 
     /* ── SERVICES ── */
-    #services { border-top: 1px solid var(--border); background: var(--bg2); }
-    .services-header { max-width: 700px; margin-bottom: 4rem; }
+    #services { border-top: 1px solid var(--border); background: var(--bg2); position:relative; overflow:hidden; }
+    #services-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:.62; }
+    .services-header { max-width: 700px; margin-bottom: 4rem; position:relative; z-index:1; }
     .services-headline {
       font-family: var(--font-display); font-size: clamp(2rem,4vw,3.25rem);
       font-weight: 700; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 1rem;
     }
-    .services-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; text-align: justify; text-align-last: left; }
+    .services-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; text-align: left; }
+    .services-stage {
+      display: grid; grid-template-columns: minmax(0,.82fr) minmax(420px,1.18fr);
+      gap: clamp(3rem,7vw,8rem); align-items: start;
+    }
+    .services-list { position: relative; }
+    .service-story {
+      min-height: 68vh; display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 0; border-top: 1px solid var(--border);
+      opacity: .34; transition: opacity .45s ease;
+    }
+    .service-story:last-child { border-bottom: 1px solid var(--border); }
+    .service-story.active { opacity: 1; }
+    .service-kicker {
+      display: flex; align-items: center; gap: .75rem; margin-bottom: 1.3rem;
+      font-family: var(--font-mono); font-size: .72rem; color: var(--accent);
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+    .service-kicker::before { content:''; width: 28px; height: 1px; background: var(--accent); }
+    .service-name {
+      font-family: var(--font-display); font-size: clamp(1.7rem,3vw,2.65rem);
+      font-weight: 700; letter-spacing: -.035em; margin-bottom: 1rem;
+    }
+    .service-desc { max-width: 470px; font-size: 1rem; color: var(--muted); line-height: 1.8; }
+    .service-outcome {
+      display: inline-flex; align-items: center; gap: .55rem; margin-top: 1.5rem;
+      font-family: var(--font-mono); color: var(--fg); font-size: .72rem;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .service-outcome::before { content:'\2192'; color: var(--accent); font-size: 1rem; }
+
+    .services-visual-column { position: sticky; top: 13vh; height: 74vh; }
+    .system-visual {
+      position: relative; height: 100%; min-height: 520px; overflow: hidden;
+      border: 1px solid var(--border); border-radius: 28px;
+      background:
+        linear-gradient(rgba(244,244,245,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244,244,245,.035) 1px, transparent 1px),
+        radial-gradient(circle at 50% 48%, rgba(var(--accent-rgb),.13), transparent 38%),
+        rgba(5,8,22,.72);
+      background-size: 38px 38px, 38px 38px, auto, auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 30px 80px rgba(0,0,0,.22);
+    }
+    .system-visual::before {
+      content:''; position:absolute; inset:-40%; pointer-events:none;
+      background: conic-gradient(from 90deg,transparent,rgba(var(--accent-rgb),.08),transparent 22%);
+      animation: visual-scan 12s linear infinite;
+    }
+    @keyframes visual-scan { to { transform: rotate(360deg); } }
+    .visual-status {
+      position:absolute; top:1.4rem; left:1.5rem; right:1.5rem; z-index:4;
+      display:flex; align-items:center; justify-content:space-between;
+      font-family:var(--font-mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase;
+    }
+    .visual-status span:first-child { color:var(--muted); }
+    .visual-live { display:flex; align-items:center; gap:.5rem; color:var(--fg); }
+    .visual-live::before {
+      content:''; width:7px; height:7px; border-radius:50%; background:var(--accent);
+      box-shadow:0 0 14px var(--accent); animation: live-pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes live-pulse { 50% { opacity:.35; transform:scale(.7); } }
+    .system-map { position:absolute; inset:12% 7% 15%; }
+    .map-ring {
+      position:absolute; left:50%; top:50%; translate:-50% -50%; border-radius:50%;
+      border:1px solid rgba(244,244,245,.09); pointer-events:none;
+    }
+    .ring-one { width:45%; aspect-ratio:1; animation:ring-rotate 18s linear infinite; }
+    .ring-two { width:73%; aspect-ratio:1; border-style:dashed; animation:ring-rotate 32s linear infinite reverse; }
+    .ring-three { width:98%; aspect-ratio:1; opacity:.45; }
+    .ring-one::before,.ring-two::before {
+      content:''; position:absolute; width:7px; height:7px; border-radius:50%;
+      left:50%; top:-4px; background:var(--accent); box-shadow:0 0 16px var(--accent);
+    }
+    @keyframes ring-rotate { to { rotate:360deg; } }
+    .map-core {
+      position:absolute; left:50%; top:50%; translate:-50% -50%; z-index:3;
+      width:150px; aspect-ratio:1; border-radius:30%;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      background:linear-gradient(145deg,rgba(var(--accent-rgb),.25),rgba(13,18,36,.94));
+      border:1px solid rgba(var(--accent-rgb),.55);
+      box-shadow:0 0 0 14px rgba(var(--accent-rgb),.04),0 0 70px rgba(var(--accent-rgb),.22);
+      transition:border-radius .6s ease,transform .6s ease;
+    }
+    .core-mark { font-family:var(--font-display);font-size:2.2rem;font-weight:700;letter-spacing:-.07em; }
+    .core-mark span { color:var(--accent); }
+    .core-label { margin-top:.5rem;font-family:var(--font-mono);font-size:.58rem;color:var(--muted);letter-spacing:.11em;text-transform:uppercase; }
+    .map-node {
+      position:absolute; z-index:3; width:118px; padding:.8rem .9rem; border-radius:12px;
+      background:rgba(13,18,36,.88); border:1px solid var(--border);
+      font-family:var(--font-mono); font-size:.61rem; color:var(--muted);
+      letter-spacing:.05em; text-transform:uppercase; transition:.5s ease;
+      backdrop-filter:blur(12px);
+    }
+    .map-node::before { content:'';display:inline-block;width:5px;height:5px;margin-right:.45rem;border-radius:50%;background:currentColor; }
+    .map-node.active { color:var(--fg);border-color:rgba(var(--accent-rgb),.65);background:rgba(var(--accent-rgb),.12);box-shadow:0 0 28px rgba(var(--accent-rgb),.17);transform:scale(1.08); }
+    .node-1 { left:5%; top:13%; } .node-2 { right:3%; top:18%; }
+    .node-3 { right:0; top:51%; } .node-4 { right:12%; bottom:3%; }
+    .node-5 { left:10%; bottom:1%; } .node-6 { left:0; top:49%; }
+    .map-beam { position:absolute;left:50%;top:50%;width:35%;height:1px;transform-origin:left center;background:linear-gradient(90deg,rgba(var(--accent-rgb),.65),transparent);opacity:.25; }
+    .map-beam::after { content:'';position:absolute;top:-2px;width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:signal-flow 2.4s linear infinite; }
+    .beam-1{rotate:215deg}.beam-2{rotate:320deg}.beam-3{rotate:5deg}.beam-4{rotate:52deg}.beam-5{rotate:125deg}.beam-6{rotate:174deg}
+    .beam-2::after,.beam-5::after{animation-delay:-.8s}.beam-3::after,.beam-6::after{animation-delay:-1.6s}
+    @keyframes signal-flow { from{left:0;opacity:0} 18%{opacity:1} to{left:100%;opacity:0} }
+    .visual-caption { position:absolute;left:1.6rem;right:1.6rem;bottom:1.5rem;z-index:4;display:flex;align-items:end;justify-content:space-between;gap:1rem; }
+    .visual-caption-label { font-family:var(--font-mono);font-size:.64rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase; }
+    .visual-caption-title { margin-top:.4rem;font-family:var(--font-display);font-size:1.15rem;font-weight:600; }
+    .visual-counter { font-family:var(--font-mono);font-size:.7rem;color:var(--muted); }
+
     .services-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      border: 1px solid var(--border); border-radius: 20px; overflow: hidden;
+      display:grid; grid-template-columns:repeat(3,1fr);
+      border:1px solid var(--border); border-radius:20px; overflow:hidden;
+      background:rgba(5,8,22,.56); position:relative; z-index:1;
+      backdrop-filter:blur(7px);
     }
     .service-card {
-      background: rgba(255,255,255,.02); padding: 2.5rem;
-      position: relative; overflow: hidden; transition: background .3s;
+      min-height:260px; padding:2.5rem; position:relative; overflow:hidden;
+      background:rgba(255,255,255,.015); transition:background .3s,border-color .3s;
     }
     .service-card::before {
-      content:''; position:absolute; inset:0;
-      background: linear-gradient(135deg,rgba(var(--accent-rgb),.08),transparent);
-      opacity:0; transition: opacity .4s;
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(circle at 18% 12%,rgba(var(--accent-rgb),.13),transparent 48%);
+      opacity:0; transition:opacity .4s;
     }
-    .service-card:hover { background: rgba(255,255,255,.04); }
-    .service-card:hover::before { opacity: 1; }
-    .srb { border-right: 1px solid var(--border); }
-    .sbb { border-bottom: 1px solid var(--border); }
-    .service-icon { font-size: 1.75rem; margin-bottom: 1.25rem; display: block; }
-    .service-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: .75rem; }
-    .service-desc { font-size: .9rem; color: var(--muted); line-height: 1.75; text-align: justify; text-align-last: left; }
+    .service-card:hover { background:rgba(255,255,255,.035); }
+    .service-card:hover::before { opacity:1; }
+    .service-index {
+      display:block; margin-bottom:3.4rem; font-family:var(--font-mono);
+      font-size:.68rem; color:var(--accent); letter-spacing:.12em;
+    }
+    .service-card .service-name { font-size:1.15rem; letter-spacing:-.015em; margin-bottom:.75rem; }
+    .service-card .service-desc { font-size:.9rem; }
+    .srb { border-right:1px solid var(--border); }
+    .sbb { border-bottom:1px solid var(--border); }
+
+    .service-motion {
+      position:absolute; top:1.7rem; right:1.7rem; width:74px; height:46px;
+      color:var(--accent); opacity:.48; transition:opacity .35s,transform .35s;
+    }
+    .service-card:hover .service-motion { opacity:1; transform:translateY(-2px); }
+    .motion-module span { position:absolute;border:1px solid currentColor;border-radius:4px;background:rgba(var(--accent-rgb),.07); }
+    .motion-module span:nth-child(1){width:24px;height:17px;left:0;top:2px;animation:module-pulse 2.8s ease-in-out infinite}
+    .motion-module span:nth-child(2){width:24px;height:17px;right:0;top:2px;animation:module-pulse 2.8s .5s ease-in-out infinite}
+    .motion-module span:nth-child(3){width:24px;height:17px;left:25px;bottom:0;animation:module-pulse 2.8s 1s ease-in-out infinite}
+    .motion-module::before,.motion-module::after{content:'';position:absolute;background:currentColor;opacity:.45;height:1px;width:28px;top:22px}
+    .motion-module::before{left:8px;rotate:28deg}.motion-module::after{right:7px;rotate:-28deg}
+    @keyframes module-pulse{50%{background:rgba(var(--accent-rgb),.28);box-shadow:0 0 12px rgba(var(--accent-rgb),.3)}}
+
+    .motion-bars { display:flex;align-items:end;justify-content:center;gap:5px;padding:5px 8px;border-bottom:1px solid rgba(var(--accent-rgb),.55); }
+    .motion-bars span{width:7px;border-radius:3px 3px 0 0;background:currentColor;transform-origin:bottom;animation:bar-rise 2.4s ease-in-out infinite}
+    .motion-bars span:nth-child(1){height:30%;animation-delay:-.2s}.motion-bars span:nth-child(2){height:62%;animation-delay:-.7s}.motion-bars span:nth-child(3){height:45%;animation-delay:-1.1s}.motion-bars span:nth-child(4){height:88%;animation-delay:-1.5s}.motion-bars span:nth-child(5){height:70%;animation-delay:-1.9s}
+    @keyframes bar-rise{50%{scale:1 .55;opacity:.55}}
+
+    .motion-flow::before{content:'';position:absolute;left:4px;right:4px;top:22px;height:1px;background:rgba(var(--accent-rgb),.5)}
+    .motion-flow span{position:absolute;top:18px;width:9px;height:9px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor;animation:flow-dot 2.6s linear infinite}
+    .motion-flow span:nth-child(2){animation-delay:-.85s}.motion-flow span:nth-child(3){animation-delay:-1.7s}
+    @keyframes flow-dot{from{left:4px;opacity:0}15%{opacity:1}to{left:62px;opacity:0}}
+
+    .motion-layers span{position:absolute;left:11px;width:52px;height:12px;border:1px solid currentColor;border-radius:4px;background:rgba(13,18,36,.85);animation:layer-shift 3s ease-in-out infinite}
+    .motion-layers span:nth-child(1){top:2px}.motion-layers span:nth-child(2){top:17px;animation-delay:-1s}.motion-layers span:nth-child(3){top:32px;animation-delay:-2s}
+    @keyframes layer-shift{50%{translate:7px 0;border-color:rgba(230,64,108,.9)}}
+
+    .motion-window{border:1px solid currentColor;border-radius:7px;padding-top:10px;background:rgba(13,18,36,.75)}
+    .motion-window::before{content:'\2022 \2022 \2022';position:absolute;top:-2px;left:7px;font-size:11px;letter-spacing:2px}
+    .motion-window span{position:absolute;left:8px;right:8px;height:4px;border-radius:4px;background:currentColor;opacity:.55;animation:window-load 2.8s ease-in-out infinite}
+    .motion-window span:nth-child(1){top:18px;right:28px}.motion-window span:nth-child(2){top:27px;left:26px}.motion-window span:nth-child(3){top:36px;right:17px}
+    @keyframes window-load{50%{opacity:1;filter:drop-shadow(0 0 5px currentColor)}}
+
+    .motion-docs span{position:absolute;left:14px;right:5px;height:1px;background:currentColor;opacity:.55;animation:doc-write 2.8s ease-in-out infinite;transform-origin:left}
+    .motion-docs span::before{content:'\2713';position:absolute;left:-14px;top:-7px;font-size:10px;opacity:0;animation:check-in 2.8s ease-in-out infinite}
+    .motion-docs span:nth-child(1){top:9px}.motion-docs span:nth-child(2){top:22px;animation-delay:-.9s}.motion-docs span:nth-child(3){top:35px;animation-delay:-1.8s}
+    .motion-docs span:nth-child(2)::before{animation-delay:-.9s}.motion-docs span:nth-child(3)::before{animation-delay:-1.8s}
+    @keyframes doc-write{0%,20%{scale:0 1}55%,100%{scale:1 1}}
+    @keyframes check-in{0%,45%{opacity:0;scale:.4}65%,100%{opacity:1;scale:1}}
 
     /* ── PORTFOLIO ── */
     #portfolio { border-top: 1px solid var(--border); }
@@ -333,15 +491,19 @@
     }
     .portfolio-grid {
       display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem;
+      perspective:1200px;
     }
     .project-card {
+      --spot-x:50%; --spot-y:40%;
       border: 1px solid var(--border); border-radius: 20px;
       overflow: hidden; text-decoration: none; color: var(--fg);
       background: rgba(255,255,255,.015);
       display: flex; flex-direction: column;
-      transition: border-color .3s, transform .3s, background .3s;
+      position:relative; transform-style:preserve-3d; will-change:transform;
+      transition: border-color .35s, background .35s, opacity .45s, filter .45s;
     }
-    .project-card:hover { border-color: rgba(var(--accent-rgb),.5); transform: translateY(-4px); background: rgba(255,255,255,.03); }
+    .project-card:hover { border-color: rgba(var(--accent-rgb),.58); background: rgba(255,255,255,.035); }
+    .portfolio-grid.has-focus .project-card:not(.is-focus) { opacity:.48;filter:saturate(.55); }
 
     .project-frame {
       position: relative; aspect-ratio: 16/10;
@@ -351,9 +513,11 @@
     .project-frame .browser-bar {
       display: flex; align-items: center; gap: .4rem;
       padding: .7rem .9rem; border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
+      background: rgba(255,255,255,.02); position:relative; z-index:3;
     }
-    .browser-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.15); }
+    .browser-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.15); transition:background .3s,box-shadow .3s; }
+    .project-card:hover .browser-dot:first-child { background:var(--accent);box-shadow:0 0 10px rgba(var(--accent-rgb),.65); }
+    .project-card:hover .browser-dot:nth-child(2) { background:rgba(230,64,108,.7); }
     .browser-url {
       font-family: var(--font-mono); font-size: .68rem; color: var(--muted);
       margin-left: .5rem; padding: .2rem .6rem; border-radius: 100px;
@@ -372,23 +536,25 @@
     }
     .project-mock::after {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle at 30% 20%, rgba(var(--accent-rgb),.1), transparent 60%);
-      pointer-events: none;
+      background:radial-gradient(circle 170px at var(--spot-x) var(--spot-y),rgba(var(--accent-rgb),.2),rgba(var(--accent-rgb),.055) 38%,transparent 72%);
+      pointer-events: none; z-index:2; opacity:.45; transition:opacity .3s;
     }
+    .project-card:hover .project-mock::after { opacity:1; }
     .project-thumb {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; object-position: top center;
-      transition: transform .5s ease;
+      transition: transform 1.1s cubic-bezier(.2,.75,.2,1), filter .5s ease;
+      will-change:transform;
     }
-    .project-card:hover .project-thumb { transform: scale(1.04); }
+    .project-card:hover .project-thumb { transform: scale(1.09) translateY(-2.5%);filter:saturate(1.08) contrast(1.03); }
 
-    .project-body { padding: 1.75rem; display: flex; flex-direction: column; gap: .75rem; flex: 1; }
+    .project-body { padding: 1.75rem; display: flex; flex-direction: column; gap: .75rem; flex: 1; position:relative;z-index:3; }
     .project-tag {
       font-family: var(--font-mono); font-size: .68rem; color: var(--accent);
       letter-spacing: .08em; text-transform: uppercase;
     }
     .project-name { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; }
-    .project-desc { font-size: .875rem; color: var(--muted); line-height: 1.7; flex: 1; text-align: justify; text-align-last: left; }
+    .project-desc { font-size: .875rem; color: var(--muted); line-height: 1.7; flex: 1; text-align: left; }
     .project-link-row {
       display: flex; align-items: center; justify-content: space-between;
       font-family: var(--font-mono); font-size: .75rem; color: var(--fg);
@@ -408,7 +574,55 @@
     .step:last-child { border-bottom: none; }
     .step-num { font-family: var(--font-mono); font-size: .72rem; color: var(--accent); letter-spacing: .1em; padding-top: .2rem; }
     .step-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: .5rem; }
-    .step-desc { font-size: .925rem; color: var(--muted); line-height: 1.75; text-align: justify; text-align-last: left; }
+    .step-desc { font-size: .925rem; color: var(--muted); line-height: 1.75; text-align: left; }
+
+    .process-diagram {
+      position:relative; max-width:980px; margin:4rem 0 1rem; padding:2.5rem 1.5rem;
+      border:1px solid var(--border); border-radius:22px;
+      background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.008));
+      overflow:hidden;
+    }
+    .process-diagram::before {
+      content:'';position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(rgba(244,244,245,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(244,244,245,.025) 1px,transparent 1px);
+      background-size:30px 30px;
+    }
+    .circuit-track { position:absolute;left:10%;right:10%;top:50%;height:1px;background:rgba(244,244,245,.12); }
+    .circuit-progress { width:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 14px rgba(var(--accent-rgb),.65); }
+    .circuit-nodes { position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem; }
+    .circuit-node { display:flex;justify-content:center;opacity:.3;transform:translateY(7px);transition:opacity .4s,transform .4s; }
+    .circuit-node.active { opacity:1;transform:translateY(0); }
+    .circuit-icon {
+      width:82px;height:82px;border-radius:20px;border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;position:relative;
+      background:rgba(5,8,22,.96);color:var(--accent);
+      box-shadow:0 0 0 8px rgba(5,8,22,.88);transition:border-color .4s,box-shadow .4s,background .4s;
+    }
+    .circuit-node.active .circuit-icon { border-color:rgba(var(--accent-rgb),.7);background:rgba(var(--accent-rgb),.1);box-shadow:0 0 0 8px rgba(5,8,22,.92),0 0 30px rgba(var(--accent-rgb),.22); }
+    .icon-diagnosis::before {
+      content:'';position:absolute;width:34px;height:34px;left:17px;top:15px;
+      border:2px solid currentColor;border-radius:50%;
+      animation:diagnosis-focus 2.6s ease-in-out infinite;
+    }
+    .icon-diagnosis::after {
+      content:'';position:absolute;width:22px;height:2px;left:47px;top:51px;
+      border-radius:2px;background:currentColor;rotate:45deg;transform-origin:left center;
+    }
+    .icon-diagnosis i { position:absolute;width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:diagnosis-node 1.9s ease-in-out infinite; }
+    .icon-diagnosis i:nth-child(1){left:28px;top:26px}
+    .icon-diagnosis i:nth-child(2){left:43px;top:31px;animation-delay:-.65s}
+    .icon-diagnosis i:nth-child(3){left:33px;top:42px;animation-delay:-1.3s}
+    @keyframes diagnosis-focus{50%{box-shadow:0 0 18px rgba(var(--accent-rgb),.38);scale:1.05}}
+    @keyframes diagnosis-node{50%{opacity:.28;scale:.65}}
+    .icon-design i{position:absolute;width:38px;height:19px;border:1px solid currentColor;border-radius:5px;background:rgba(5,8,22,.92);transform:rotate(30deg) skewX(-25deg)}
+    .icon-design i:nth-child(1){translate:0 -11px}.icon-design i:nth-child(2){translate:0 0}.icon-design i:nth-child(3){translate:0 11px}
+    .icon-code{font-family:var(--font-mono);font-size:1.35rem;font-weight:500;letter-spacing:.08em}
+    .icon-code::before{content:'<';margin-right:8px}.icon-code::after{content:'>';margin-left:8px}
+    .icon-code i{width:2px;height:28px;background:currentColor;rotate:20deg;animation:code-blink 1.8s ease-in-out infinite}
+    @keyframes code-blink{50%{opacity:.35}}
+    .icon-launch::before{content:'\2713';font-family:var(--font-display);font-size:2rem;font-weight:700}
+    .icon-launch::after{content:'';position:absolute;width:44px;height:44px;border:1px solid currentColor;border-radius:50%;animation:launch-ring 2s ease-out infinite}
+    @keyframes launch-ring{to{scale:1.55;opacity:0}}
 
     /* ── CONTACT ── */
     #contact { border-top: 1px solid var(--border); }
@@ -417,7 +631,7 @@
       font-family: var(--font-display); font-size: clamp(2.5rem,5vw,4.5rem);
       font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin-bottom: 1.5rem;
     }
-    .contact-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 3rem; text-align: justify; text-align-last: center; }
+    .contact-sub { color: var(--muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 3rem; text-align: center; }
     .contact-links { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
     .contact-link {
       display: flex; align-items: center; justify-content: space-between;
@@ -478,6 +692,10 @@
       font-family: var(--font-mono); font-size: .72rem; color: var(--muted);
       text-align: center; margin-top: .25rem;
     }
+    .form-status { min-height:1.2rem;text-align:center;font-size:.78rem;color:var(--muted); }
+    .form-status.success { color:#8de4c9; }
+    .form-status.error { color:#ff8da8; }
+    .wa-submit:disabled { opacity:.6;cursor:wait; }
 
     /* ── FOOTER ── */
     footer {
@@ -494,6 +712,17 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .rd1 { transition-delay: .1s; } .rd2 { transition-delay: .2s; } .rd3 { transition-delay: .3s; }
 
+    .hero-sub,
+    .about-text,
+    .services-sub,
+    .service-desc,
+    .project-desc,
+    .step-desc {
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
+    }
+
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1.5rem; }
@@ -504,14 +733,35 @@
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .about-visual { display: none; }
       .portfolio-grid { grid-template-columns: 1fr; }
-      .services-grid { grid-template-columns: 1fr; }
-      .service-card.srb { border-right: none; }
-      .service-card { border-bottom: 1px solid var(--border); }
-      .service-card:last-child { border-bottom: none; }
+      .services-stage { grid-template-columns: 1fr; gap:2.5rem; }
+      .services-visual-column { position:relative; top:auto; height:480px; grid-row:1; }
+      .system-visual { min-height:0; }
+      .service-story { min-height:auto; padding:3rem 0; opacity:1; }
+      .map-node { width:auto; padding:.6rem; font-size:.52rem; }
+      .map-core { width:115px; }
+      .services-grid { grid-template-columns:1fr; }
+      .service-card { min-height:auto; }
+      .service-card.srb { border-right:none; }
+      .service-card { border-bottom:1px solid var(--border); }
+      .service-card:last-child { border-bottom:none; }
+      .process-diagram { padding:1.75rem; }
+      .circuit-track { left:50%;right:auto;top:10%;bottom:10%;width:1px;height:auto; }
+      .circuit-progress { width:100%;height:0; }
+      .circuit-nodes { grid-template-columns:1fr;gap:2.2rem; }
       .scroll-indicator { left: 1.5rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: .5rem; text-align: center; }
       body { cursor: auto; }
       #cursor-dot, #cursor-ring { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+      .ticker-track { animation: none !important; }
     }
   </style>
 </head>
@@ -526,10 +776,10 @@
     <ul class="nav-links">
       <li><a href="#about">Nosotros</a></li>
       <li><a href="#services">Servicios</a></li>
-      <li><a href="#portfolio">Proyectos</a></li>
+      <li><a href="#portfolio">Casos</a></li>
       <li><a href="#process">Proceso</a></li>
       <li><a href="#contact">Contacto</a></li>
-      <li><a href="founder.html">Fundador</a></li>
+      <li><a href="founder.html">Liderazgo</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Hablemos →</a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
@@ -538,9 +788,9 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#about">Nosotros</a>
     <a href="#services">Servicios</a>
-    <a href="#portfolio">Proyectos</a>
+    <a href="#portfolio">Casos</a>
     <a href="#process">Proceso</a>
-    <a href="founder.html">Fundador</a>
+    <a href="founder.html">Liderazgo</a>
     <a href="#contact" class="mm-cta">Hablemos →</a>
   </div>
 
@@ -552,22 +802,20 @@
 
     <div class="hero-inner">
       <div class="hero-top-row">
-        <img class="hero-logo" src="images/nextek-logo.png" alt="Logo de Nextek"
-             onerror="this.style.display='none'; document.getElementById('heroLogoFallback').style.display='flex';">
-        <div id="heroLogoFallback" class="hero-logo-fallback" style="display:none;">NX</div>
-        <p class="hero-eyebrow" style="margin-bottom:0;">Nextek S.A. · Cartago, Costa Rica</p>
+        <div class="hero-wordmark" aria-label="Nextek">NEX<span>TEK</span></div>
+        <p class="hero-eyebrow" style="margin-bottom:0;">Ingeniería de software · Costa Rica</p>
       </div>
       <h1 class="hero-headline">
-        <span class="line"><span class="line-inner">Software que</span></span>
-        <span class="line"><span class="line-inner"><span class="accent">resuelve</span></span></span>
-        <span class="line"><span class="line-inner">problemas reales.</span></span>
+        <span class="line"><span class="line-inner">Tecnología para</span></span>
+        <span class="line"><span class="line-inner"><span class="accent">operaciones</span></span></span>
+        <span class="line"><span class="line-inner">que quieren avanzar.</span></span>
       </h1>
       <p class="hero-sub">
-        Desarrollamos sistemas ERP, dashboards de datos y automatización de procesos para empresas que quieren crecer con tecnología hecha a medida.
+        Diseñamos software empresarial, automatización y soluciones de datos que convierten procesos complejos en operaciones más claras, conectadas y escalables.
       </p>
       <div class="hero-ctas">
-        <a href="#services" class="btn-primary">Ver servicios</a>
-        <a href="#contact" class="btn-secondary">Contacto directo</a>
+        <a href="#contact" class="btn-primary">Solicitar diagnóstico</a>
+        <a href="#portfolio" class="btn-secondary">Conocer nuestros casos</a>
       </div>
     </div>
 
@@ -582,12 +830,12 @@
     <div class="section-label">Quiénes somos</div>
     <div class="about-grid">
       <div>
-        <h2 class="about-headline reveal">Tecnología que se construye con <em>propósito</em>.</h2>
+        <h2 class="about-headline reveal">Ingeniería aplicada al <em>negocio</em>.</h2>
         <p class="about-text reveal rd1">
-          <strong>Nextek</strong> es un estudio de desarrollo de software costarricense enfocado en convertir procesos empresariales complejos en soluciones claras — desde la base de datos hasta la interfaz final.
+          <strong>Nextek</strong> es una firma costarricense de ingeniería de software enfocada en diseñar soluciones digitales alrededor de la operación real de cada organización.
         </p>
         <p class="about-text reveal rd2">
-          Combinamos <strong>ingeniería de procesos, desarrollo de software y consultoría IT</strong> para PYMEs que necesitan sistemas a la medida, no plantillas genéricas.
+          Integramos <strong>análisis de procesos, arquitectura, desarrollo y acompañamiento técnico</strong> en un solo equipo responsable, desde el descubrimiento hasta la puesta en producción.
         </p>
         <div class="about-tags reveal rd3">
           <span class="tag">Oracle APEX</span>
@@ -605,16 +853,16 @@
       </div>
       <div class="about-visual reveal rd2">
         <div class="about-card card-3">
-          <div class="card-num">3+</div>
-          <div class="card-label">años en tecnología</div>
+          <div class="card-num">B2B</div>
+          <div class="card-label">enfoque empresarial</div>
         </div>
         <div class="about-card card-1">
-          <div class="card-num" style="color:var(--accent3)">4</div>
-          <div class="card-label">proyectos activos</div>
+          <div class="card-num" style="color:var(--accent3)">2</div>
+          <div class="card-label">soluciones publicadas</div>
         </div>
         <div class="about-card card-2">
-          <div class="card-num" style="color:var(--accent2)">100%</div>
-          <div class="card-label">soluciones a medida</div>
+          <div class="card-num" style="color:var(--accent2)">CR</div>
+          <div class="card-label">origen y operación</div>
         </div>
       </div>
     </div>
@@ -623,82 +871,75 @@
   <!-- TICKER -->
   <div class="ticker-strip">
     <div class="ticker-track">
-      <span>Software que resuelve problemas reales</span><span class="ticker-dot">·</span>
-      <span>ERP</span><span class="ticker-dot">·</span>
-      <span>Dashboards & Datos</span><span class="ticker-dot">·</span>
-      <span>Automatización de Procesos</span><span class="ticker-dot">·</span>
-      <span>Consultoría IT</span><span class="ticker-dot">·</span>
-      <span>Desarrollo Web & Apps</span><span class="ticker-dot">·</span>
-      <span>Soporte Técnico</span><span class="ticker-dot">·</span>
-      <span>Software que resuelve problemas reales</span><span class="ticker-dot">·</span>
-      <span>ERP</span><span class="ticker-dot">·</span>
-      <span>Dashboards & Datos</span><span class="ticker-dot">·</span>
-      <span>Automatización de Procesos</span><span class="ticker-dot">·</span>
-      <span>Consultoría IT</span><span class="ticker-dot">·</span>
-      <span>Desarrollo Web & Apps</span><span class="ticker-dot">·</span>
-      <span>Soporte Técnico</span><span class="ticker-dot">·</span>
+      <span>Software empresarial</span><span class="ticker-dot">·</span>
+      <span>Datos & inteligencia</span><span class="ticker-dot">·</span>
+      <span>Automatización</span><span class="ticker-dot">·</span>
+      <span>Arquitectura tecnológica</span><span class="ticker-dot">·</span>
+      <span>Plataformas digitales</span><span class="ticker-dot">·</span>
+      <span>Documentación & continuidad</span><span class="ticker-dot">·</span>
+      <span>Software empresarial</span><span class="ticker-dot">·</span>
+      <span>Datos & inteligencia</span><span class="ticker-dot">·</span>
+      <span>Automatización</span><span class="ticker-dot">·</span>
+      <span>Arquitectura tecnológica</span><span class="ticker-dot">·</span>
+      <span>Plataformas digitales</span><span class="ticker-dot">·</span>
+      <span>Documentación & continuidad</span><span class="ticker-dot">·</span>
     </div>
   </div>
 
   <!-- SERVICES -->
   <section id="services">
+    <canvas id="services-canvas" aria-hidden="true"></canvas>
     <div class="services-header">
       <div class="section-label reveal">Servicios</div>
       <h2 class="services-headline reveal rd1">Todo lo que tu empresa necesita para digitalizar sus procesos.</h2>
       <p class="services-sub reveal rd2">Trabajamos de principio a fin: análisis, diseño, desarrollo e implementación. Sin dependencias externas innecesarias.</p>
     </div>
     <div class="services-grid reveal rd1">
-      <div class="service-card srb sbb">
-        <span class="service-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>
-        </span>
-        <div class="service-name">Soporte técnico</div>
-        <div class="service-desc">Revisión y mantenimiento de tus dispositivos digitales como computadores, laptops, celulares. Para que puedas trabajar con confianza y seguridad.</div>
-      </div>
-      <div class="service-card srb sbb">
-        <span class="service-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        </span>
-        <div class="service-name">Dashboards & Datos</div>
-        <div class="service-desc">Visualización de datos en tiempo real para toma de decisiones con Power BI. Dashboards de manufactura, KPIs operativos y reportes automáticos. SQL, Power BI, Excel</div>
-      </div>
-      <div class="service-card sbb">
-        <span class="service-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-        </span>
-        <div class="service-name">Automatización de Procesos</div>
-        <div class="service-desc">Identificación y eliminación de cuellos de botella. Automatización de flujos, reportes y tareas repetitivas en entornos industriales y comerciales. Power Automate - Power Apps - SharePoint</div>
-      </div>
-      <div class="service-card srb">
-        <span class="service-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-        </span>
-        <div class="service-name">Consultoría IT para PYMEs</div>
-        <div class="service-desc">Acompañamiento estratégico para empresas en proceso de digitalización: herramientas, procesos y arquitectura tecnológica adaptada a tu escala.</div>
-      </div>
-      <div class="service-card srb">
-        <span class="service-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </span>
-        <div class="service-name">Desarrollo Web & Apps</div>
-        <div class="service-desc">Aplicaciones web modernas, landing pages y herramientas internas. Stack: JavaScript, Tailwind CSS — deployable en Vercel, AWS o Azure.</div>
-      </div>
-      <div class="service-card">
-        <span class="service-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-        </span>
-        <div class="service-name">Documentación</div>
-        <div class="service-desc">Redacción de SOPs, manuales técnicos y documentación de procesos para entornos regulados o equipos en crecimiento.</div>
-      </div>
+      <article class="service-card srb sbb">
+        <span class="service-index">01</span>
+        <div class="service-motion motion-module" aria-hidden="true"><span></span><span></span><span></span></div>
+        <h3 class="service-name">Software empresarial</h3>
+        <p class="service-desc">Sistemas internos, módulos operativos, portales e integraciones diseñados alrededor de reglas de negocio y flujos reales.</p>
+      </article>
+      <article class="service-card srb sbb">
+        <span class="service-index">02</span>
+        <div class="service-motion motion-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <h3 class="service-name">Datos & inteligencia</h3>
+        <p class="service-desc">Modelado, indicadores y tableros ejecutivos que convierten datos dispersos en información confiable para decidir.</p>
+      </article>
+      <article class="service-card sbb">
+        <span class="service-index">03</span>
+        <div class="service-motion motion-flow" aria-hidden="true"><span></span><span></span><span></span></div>
+        <h3 class="service-name">Automatización de procesos</h3>
+        <p class="service-desc">Digitalización de aprobaciones, reportes y tareas repetitivas para reducir fricción y mejorar la trazabilidad operativa.</p>
+      </article>
+      <article class="service-card srb">
+        <span class="service-index">04</span>
+        <div class="service-motion motion-layers" aria-hidden="true"><span></span><span></span><span></span></div>
+        <h3 class="service-name">Arquitectura & modernización</h3>
+        <p class="service-desc">Evaluación de procesos, herramientas y riesgos para definir una ruta tecnológica viable, segura y alineada con el negocio.</p>
+      </article>
+      <article class="service-card srb">
+        <span class="service-index">05</span>
+        <div class="service-motion motion-window" aria-hidden="true"><span></span><span></span><span></span></div>
+        <h3 class="service-name">Plataformas digitales</h3>
+        <p class="service-desc">Sitios corporativos, aplicaciones web y experiencias digitales construidas para comunicar, operar y crecer con claridad.</p>
+      </article>
+      <article class="service-card">
+        <span class="service-index">06</span>
+        <div class="service-motion motion-docs" aria-hidden="true"><span></span><span></span><span></span></div>
+        <h3 class="service-name">Documentación & continuidad</h3>
+        <p class="service-desc">SOPs, manuales técnicos y transferencia de conocimiento para que cada solución pueda operarse y mantenerse con confianza.</p>
+      </article>
     </div>
   </section>
 
   <!-- PORTFOLIO -->
   <section id="portfolio">
     <div class="portfolio-header">
-      <div class="section-label reveal">Portafolio</div>
-      <h2 class="portfolio-headline reveal rd1">Proyectos que <em>hablan</em> por nosotros.</h2>
-      <p class="services-sub reveal rd2">Cada sitio está construido, desplegado y en producción — no son mockups.</p>
+      <div class="section-label reveal">Experiencia aplicada</div>
+      <h2 class="portfolio-headline reveal rd1">Casos reales, construidos para <em>contextos reales</em>.</h2>
+      <p class="services-sub reveal rd2">Dos soluciones publicadas para organizaciones costarricenses de sectores distintos. Presentamos el alcance comprobable, sin cifras estimadas.</p>
     </div>
     <div class="portfolio-grid">
 
@@ -714,11 +955,11 @@
           </div>
         </div>
         <div class="project-body">
-          <span class="project-tag">Landing · Eventos</span>
+          <span class="project-tag">Experiencia digital · Eventos</span>
           <div class="project-name">Mar-Villa Deco</div>
-          <p class="project-desc">Sitio de marca para una empresa de decoración de eventos en Cartago: galería, testimonios y formulario de cotización conectado directo a WhatsApp.</p>
+          <p class="project-desc">Plataforma de marca para presentar servicios, portafolio visual y testimonios, con un recorrido de cotización conectado directamente a WhatsApp.</p>
           <div class="project-link-row">
-            <span>Ver proyecto</span>
+            <span>Explorar caso</span>
             <span class="arrow">→</span>
           </div>
         </div>
@@ -736,11 +977,11 @@
           </div>
         </div>
         <div class="project-body">
-          <span class="project-tag">Landing · Industrial</span>
+          <span class="project-tag">Presencia corporativa · Industria</span>
           <div class="project-name">ICB Soluciones Industriales</div>
-          <p class="project-desc">Sitio corporativo para una empresa de ingeniería industrial: áreas de especialidad, proceso de trabajo y contacto directo, con un tono técnico y confiable.</p>
+          <p class="project-desc">Presencia corporativa para comunicar especialidades de ingeniería, proceso de trabajo y canales de contacto con una narrativa técnica y confiable.</p>
           <div class="project-link-row">
-            <span>Ver proyecto</span>
+            <span>Explorar caso</span>
             <span class="arrow">→</span>
           </div>
         </div>
@@ -752,35 +993,44 @@
   <!-- PROCESS -->
   <section id="process">
     <div class="section-label reveal">Proceso</div>
-    <h2 class="process-headline reveal rd1">Cómo trabajamos contigo.</h2>
-    <p class="services-sub reveal rd2">Sin metodologías de agencia. Comunicación directa, entregas claras y código que funciona desde el día uno.</p>
+    <h2 class="process-headline reveal rd1">Un proceso claro de principio a continuidad.</h2>
+    <p class="services-sub reveal rd2">Cada etapa tiene objetivos, entregables y decisiones visibles para mantener el alcance, la calidad y las expectativas bajo control.</p>
+    <div class="process-diagram reveal" aria-hidden="true">
+      <div class="circuit-track"><div class="circuit-progress"></div></div>
+      <div class="circuit-nodes">
+        <div class="circuit-node"><div class="circuit-icon icon-diagnosis"><i></i><i></i><i></i></div></div>
+        <div class="circuit-node"><div class="circuit-icon icon-design"><i></i><i></i><i></i></div></div>
+        <div class="circuit-node"><div class="circuit-icon icon-code"><i></i></div></div>
+        <div class="circuit-node"><div class="circuit-icon icon-launch"></div></div>
+      </div>
+    </div>
     <div class="steps">
       <div class="step reveal">
-        <span class="step-num">01 — Descubrimiento</span>
+        <span class="step-num">01 — Diagnóstico</span>
         <div>
-          <div class="step-title">Entendemos tu problema</div>
-          <div class="step-desc">Escuchamos cómo funciona tu empresa hoy, qué duele más y qué quieres lograr. Sin asumir, sin proponer de más.</div>
+          <div class="step-title">Entendemos la operación</div>
+          <div class="step-desc">Mapeamos objetivos, usuarios, procesos, restricciones y riesgos antes de definir cualquier solución.</div>
         </div>
       </div>
       <div class="step reveal rd1">
         <span class="step-num">02 — Diseño</span>
         <div>
-          <div class="step-title">Arquitectura de la solución</div>
-          <div class="step-desc">Propuesta técnica clara: módulos, base de datos, flujos y tecnologías. Aprobamos juntos antes de escribir una línea de código.</div>
+          <div class="step-title">Diseñamos la solución</div>
+          <div class="step-desc">Definimos alcance, experiencia, arquitectura, integraciones y criterios de aceptación antes de construir.</div>
         </div>
       </div>
       <div class="step reveal rd2">
         <span class="step-num">03 — Desarrollo</span>
         <div>
-          <div class="step-title">Construcción iterativa</div>
-          <div class="step-desc">Trabajamos en ciclos cortos con entregas visibles. Puedes ver el avance, dar retroalimentación y ajustar en tiempo real.</div>
+          <div class="step-title">Construimos con visibilidad</div>
+          <div class="step-desc">Entregamos avances revisables en ciclos cortos, validando funcionalidad y prioridades con las personas responsables.</div>
         </div>
       </div>
       <div class="step reveal rd3">
-        <span class="step-num">04 — Entrega</span>
+        <span class="step-num">04 — Puesta en operación</span>
         <div>
-          <div class="step-title">Deploy, documentación y soporte</div>
-          <div class="step-desc">El sistema se entrega funcionando, documentado y con capacitación. No desaparecemos al firmar — el soporte post-entrega es parte del trato.</div>
+          <div class="step-title">Implementamos y transferimos</div>
+          <div class="step-desc">Publicamos, documentamos y transferimos conocimiento para asegurar una adopción ordenada y una continuidad responsable.</div>
         </div>
       </div>
     </div>
@@ -790,33 +1040,41 @@
   <section id="contact">
     <div class="contact-inner">
       <div class="section-label reveal" style="justify-content:center;margin-bottom:1.5rem;">Contacto</div>
-      <h2 class="contact-headline reveal rd1">¿Tienes un proyecto en mente?</h2>
-      <p class="contact-sub reveal rd2">Cuéntanos lo que necesitas. Respondemos rápido y hablamos claro. Cotización en menos de 24 horas.</p>
+      <h2 class="contact-headline reveal rd1">Conversemos sobre tu operación.</h2>
+      <p class="contact-sub reveal rd2">Cuéntanos qué proceso quieres mejorar. Revisaremos el contexto y coordinaremos una primera conversación de diagnóstico, sin compromiso.</p>
 
-      <form class="wa-form reveal rd3" id="quoteForm">
+      <form class="wa-form reveal rd3" id="quoteForm" action="https://formsubmit.co/ajax/nexteksa@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Nueva solicitud desde el sitio de Nextek" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none" />
         <div class="wa-field">
           <label for="q-name">Nombre</label>
-          <input type="text" id="q-name" placeholder="Tu nombre completo" required />
+          <input type="text" id="q-name" name="nombre" placeholder="Tu nombre completo" required />
+        </div>
+        <div class="wa-field">
+          <label for="q-email">Correo electrónico</label>
+          <input type="email" id="q-email" name="email" placeholder="tu@empresa.com" required />
         </div>
         <div class="wa-field">
           <label for="q-service">Servicio que necesitas</label>
-          <select id="q-service" required>
+          <select id="q-service" name="servicio" required>
             <option value="">Selecciona una opción</option>
-            <option>Soporte Técnico</option>
-            <option>Dashboards o Análisis de Datos</option>
+            <option>Software empresarial</option>
+            <option>Datos e inteligencia</option>
             <option>Automatización de Procesos</option>
-            <option>Consultoría IT para PYMEs</option>
-            <option>Desarrollo Web & Apps</option>
-            <option>Documentación</option>
+            <option>Arquitectura o modernización</option>
+            <option>Plataformas digitales</option>
+            <option>Documentación y continuidad</option>
             <option>Otro</option>
           </select>
         </div>
         <div class="wa-field">
           <label for="q-message">Cuéntanos sobre tu proyecto</label>
-          <textarea id="q-message" placeholder="Describe brevemente lo que necesitas..."></textarea>
+          <textarea id="q-message" name="mensaje" placeholder="Describe brevemente lo que necesitas..."></textarea>
         </div>
-        <button type="submit" class="wa-submit">Enviar por correo →</button>
-        <p class="wa-note">Tu mensaje se enviará a nexteksa@gmail.com</p>
+        <button type="submit" class="wa-submit">Solicitar conversación →</button>
+        <p class="wa-note">Por ahora responderemos desde nexteksa@gmail.com. No compartiremos tus datos.</p>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -824,33 +1082,43 @@
   <!-- FOOTER -->
   <footer>
     <span class="footer-copy">© 2026 Nextek S.A. Todos los derechos reservados.</span>
-    <span class="footer-note">Construido con <span>♥</span> en Cartago, Costa Rica. <a href="founder.html">Conoce al fundador →</a></span>
+    <span class="footer-note">Ingeniería de software desde Cartago, Costa Rica. <a href="founder.html">Conoce el liderazgo →</a></span>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script>
-    /* ── COTIZACIÓN VÍA CORREO ── */
-    const CONTACT_EMAIL = 'nexteksa@gmail.com';
+    /* ── FORMULARIO DIRECTO A GMAIL ── */
     const quoteForm = document.getElementById('quoteForm');
+    const formStatus = document.getElementById('formStatus');
     if (quoteForm) {
-      quoteForm.addEventListener('submit', e => {
+      quoteForm.addEventListener('submit', async e => {
         e.preventDefault();
-        const name = document.getElementById('q-name').value.trim();
-        const service = document.getElementById('q-service').value.trim();
-        const message = document.getElementById('q-message').value.trim();
+        const submitButton = quoteForm.querySelector('button[type="submit"]');
+        const originalLabel = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Enviando…';
+        formStatus.className = 'form-status';
+        formStatus.textContent = '';
 
-        const subject = `Nuevo proyecto: ${name || 'Cliente potencial'}`;
-        const bodyLines = [
-          'Hola Nextek, me gustaría hablar sobre un proyecto:',
-          '',
-          `Nombre: ${name || 'No especificado'}`,
-          `Servicio de interés: ${service || 'No especificado'}`,
-          `Detalles: ${message || 'Sin mensaje adicional'}`,
-        ];
-
-        const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-        window.location.href = mailto;
+        try {
+          const response = await fetch(quoteForm.action, {
+            method:'POST',
+            headers:{ 'Accept':'application/json' },
+            body:new FormData(quoteForm)
+          });
+          const data = await response.json();
+          if (!response.ok || data.success === false) throw new Error('No se pudo procesar la solicitud');
+          formStatus.className = 'form-status success';
+          formStatus.textContent = 'Mensaje enviado correctamente. Te contactaremos pronto.';
+          quoteForm.reset();
+        } catch (error) {
+          formStatus.className = 'form-status error';
+          formStatus.textContent = 'No pudimos enviar el mensaje. Inténtalo nuevamente.';
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
       });
     }
 
@@ -939,8 +1207,125 @@
     }
     drawCanvas();
 
+    /* ── AMBIENT SERVICES PARTICLES ── */
+    const servicesSection = document.getElementById('services');
+    const servicesCanvas = document.getElementById('services-canvas');
+    const servicesCtx = servicesCanvas.getContext('2d');
+    const motionReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let servicesW = 0, servicesH = 0, servicesVisible = false;
+    let servicesMouse = { x:-999, y:-999 };
+    const serviceParticles = Array.from({ length:62 }, () => ({
+      x:Math.random(), y:Math.random(), vx:(Math.random()-.5)*.09, vy:(Math.random()-.5)*.09,
+      r:Math.random()*1.2+.35, a:Math.random()*.24+.08
+    }));
+
+    function resizeServicesCanvas() {
+      servicesW = servicesCanvas.width = servicesSection.clientWidth;
+      servicesH = servicesCanvas.height = servicesSection.scrollHeight;
+    }
+    resizeServicesCanvas();
+    new ResizeObserver(resizeServicesCanvas).observe(servicesSection);
+
+    servicesSection.addEventListener('mousemove', event => {
+      const rect = servicesSection.getBoundingClientRect();
+      servicesMouse.x = event.clientX - rect.left;
+      servicesMouse.y = event.clientY - rect.top;
+    });
+    servicesSection.addEventListener('mouseleave', () => { servicesMouse = { x:-999, y:-999 }; });
+    new IntersectionObserver(([entry]) => { servicesVisible = entry.isIntersecting; }, { threshold:.04 }).observe(servicesSection);
+
+    function drawServicesParticles() {
+      requestAnimationFrame(drawServicesParticles);
+      if (!servicesVisible || motionReduced) return;
+      servicesCtx.clearRect(0,0,servicesW,servicesH);
+      serviceParticles.forEach(p => {
+        let px = p.x * servicesW, py = p.y * servicesH;
+        const dx = servicesMouse.x - px, dy = servicesMouse.y - py;
+        const distance = Math.hypot(dx,dy);
+        if (distance < 180 && distance > 1) {
+          p.x += (dx / distance) * .000035;
+          p.y += (dy / distance) * .000035;
+        }
+        p.x += p.vx / Math.max(servicesW,1);
+        p.y += p.vy / Math.max(servicesH,1);
+        if (p.x < 0 || p.x > 1) p.vx *= -1;
+        if (p.y < 0 || p.y > 1) p.vy *= -1;
+        px = p.x * servicesW; py = p.y * servicesH;
+        servicesCtx.beginPath(); servicesCtx.arc(px,py,p.r,0,Math.PI*2);
+        servicesCtx.fillStyle = `rgba(219,41,85,${p.a})`; servicesCtx.fill();
+      });
+      for (let i=0;i<serviceParticles.length;i++) {
+        for (let j=i+1;j<serviceParticles.length;j++) {
+          const ax=serviceParticles[i].x*servicesW, ay=serviceParticles[i].y*servicesH;
+          const bx=serviceParticles[j].x*servicesW, by=serviceParticles[j].y*servicesH;
+          const distance=Math.hypot(ax-bx,ay-by);
+          if (distance<115) {
+            servicesCtx.beginPath(); servicesCtx.moveTo(ax,ay); servicesCtx.lineTo(bx,by);
+            servicesCtx.strokeStyle=`rgba(230,64,108,${.045*(1-distance/115)})`;
+            servicesCtx.lineWidth=.55; servicesCtx.stroke();
+          }
+        }
+      }
+    }
+    drawServicesParticles();
+
     /* ── HERO ANIMATIONS ── */
     gsap.registerPlugin(ScrollTrigger);
+
+    /* ── PROCESS CIRCUIT ── */
+    const processMotion = gsap.matchMedia();
+    if (motionReduced) {
+      gsap.set('.circuit-progress', { width:'100%', height:'100%' });
+      gsap.set('.circuit-node', { opacity:1, y:0 });
+    } else {
+      processMotion.add('(min-width: 769px)', () => {
+        gsap.timeline({ scrollTrigger:{ trigger:'.process-diagram', start:'top 78%', end:'bottom 42%', scrub:.7 } })
+          .to('.circuit-progress', { width:'100%', ease:'none', duration:1 }, 0)
+          .to('.circuit-node', { opacity:1, y:0, stagger:.23, duration:.18, ease:'power2.out' }, .08);
+      });
+      processMotion.add('(max-width: 768px)', () => {
+        gsap.timeline({ scrollTrigger:{ trigger:'.process-diagram', start:'top 82%', end:'bottom 48%', scrub:.7 } })
+          .to('.circuit-progress', { height:'100%', ease:'none', duration:1 }, 0)
+          .to('.circuit-node', { opacity:1, y:0, stagger:.23, duration:.18, ease:'power2.out' }, .08);
+      });
+    }
+
+    /* ── INTERACTIVE CASE STUDIES ── */
+    const portfolioGrid = document.querySelector('.portfolio-grid');
+    const projectCards = [...document.querySelectorAll('.project-card')];
+    const finePointer = window.matchMedia('(pointer:fine)').matches;
+    if (finePointer && !motionReduced) {
+      projectCards.forEach(card => {
+        const tiltX = gsap.quickTo(card,'rotationX',{duration:.45,ease:'power3.out'});
+        const tiltY = gsap.quickTo(card,'rotationY',{duration:.45,ease:'power3.out'});
+        const lift = gsap.quickTo(card,'y',{duration:.45,ease:'power3.out'});
+        const details = card.querySelectorAll('.project-tag,.project-name,.project-desc,.project-link-row');
+
+        card.addEventListener('mouseenter', () => {
+          portfolioGrid.classList.add('has-focus');
+          card.classList.add('is-focus');
+          lift(-6);
+          gsap.fromTo(details,{opacity:.58,y:7},{opacity:1,y:0,duration:.42,stagger:.055,ease:'power3.out',overwrite:true});
+        });
+        card.addEventListener('mousemove', event => {
+          const rect = card.getBoundingClientRect();
+          const px = (event.clientX-rect.left)/rect.width;
+          const py = (event.clientY-rect.top)/rect.height;
+          card.style.setProperty('--spot-x',`${px*100}%`);
+          card.style.setProperty('--spot-y',`${py*100}%`);
+          tiltX((.5-py)*3.2);
+          tiltY((px-.5)*3.2);
+        });
+        card.addEventListener('mouseleave', () => {
+          portfolioGrid.classList.remove('has-focus');
+          card.classList.remove('is-focus');
+          tiltX(0); tiltY(0); lift(0);
+          card.style.setProperty('--spot-x','50%');
+          card.style.setProperty('--spot-y','40%');
+        });
+      });
+    }
+
     gsap.from('.hero-top-row', { opacity:0, y:16, duration:.8, ease:'power3.out', delay:.1 });
     gsap.from('.line-inner',   { y:'110%', duration:1.1, stagger:.12, ease:'power4.out', delay:.25 });
     gsap.from('.hero-sub',     { opacity:0, y:16, duration:.9, ease:'power3.out', delay:.6 });
