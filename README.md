@@ -27,6 +27,7 @@ assets/
     icb.png
     contapyme.png
     facturacr.png
+    nextek-logo.png
   js/
     main.js
     founder.js
