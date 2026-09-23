@@ -4,10 +4,12 @@ export function initHeroParticles() {
   const context = canvas.getContext('2d');
   let width = 0;
   let height = 0;
-  const points = Array.from({ length: 110 }, () => ({
+  const mobile = window.matchMedia('(max-width: 768px)').matches;
+  const points = Array.from({ length: mobile ? 105 : 185 }, (_, index) => ({
     x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight,
-    r: Math.random() * 1.4 + .3, vx: (Math.random() - .5) * .3,
-    vy: (Math.random() - .5) * .3, a: Math.random() * .45 + .08
+    r: Math.random() * 1.65 + .25, vx: (Math.random() - .5) * .34,
+    vy: (Math.random() - .5) * .34, a: Math.random() * .5 + .1,
+    tone: index % 7 === 0 ? '244,244,245' : index % 5 === 0 ? '124,92,255' : '219,41,85'
   }));
   const resize = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; };
   resize();
@@ -19,15 +21,15 @@ export function initHeroParticles() {
       if (point.x < 0 || point.x > width) point.vx *= -1;
       if (point.y < 0 || point.y > height) point.vy *= -1;
       context.beginPath(); context.arc(point.x, point.y, point.r, 0, Math.PI * 2);
-      context.fillStyle = `rgba(219,41,85,${point.a})`; context.fill();
+      context.fillStyle = `rgba(${point.tone},${point.a})`; context.fill();
     });
     for (let first = 0; first < points.length; first += 1) for (let second = first + 1; second < points.length; second += 1) {
       const dx = points[first].x - points[second].x;
       const dy = points[first].y - points[second].y;
       const distance = Math.hypot(dx, dy);
-      if (distance < 100) {
+      if (distance < 118) {
         context.beginPath(); context.moveTo(points[first].x, points[first].y); context.lineTo(points[second].x, points[second].y);
-        context.strokeStyle = `rgba(219,41,85,${.07 * (1 - distance / 100)})`; context.lineWidth = .5; context.stroke();
+        context.strokeStyle = `rgba(219,41,85,${.1 * (1 - distance / 118)})`; context.lineWidth = .5; context.stroke();
       }
     }
     requestAnimationFrame(draw);

@@ -57,7 +57,7 @@
     .tl-org{font-size:.8rem;color:var(--muted);margin-bottom:.85rem;font-family:var(--font-mono);letter-spacing:.03em;}
     .tl-bullets{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
     .tl-bullets li{font-size:.9rem;color:var(--muted);line-height:1.75;text-align:justify;text-align-last:left;padding-left:1.1rem;position:relative;}
-    .tl-bullets li::before{content:'â€”';position:absolute;left:0;color:var(--accent);}
+    .tl-bullets li::before{content:'';position:absolute;left:.1rem;top:.72rem;width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(var(--accent-rgb),.55);}
 
     /* â”€â”€ EDUCATION / CERTS â”€â”€ */
     #credentials{border-top:1px solid var(--border);}
