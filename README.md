@@ -9,18 +9,22 @@ Sitio estático de Nextek y perfil de su fundador. Presenta servicios de ingenie
 - Soporte para `prefers-reduced-motion` y navegación mediante teclado.
 - Formulario asíncrono conectado a FormSubmit.
 - Página de liderazgo independiente en `founder.html`.
+- Casos narrativos de producto para Next-Meal y Next-Fix, con escenas animadas por GSAP.
 
 ## Estructura
 
 ```text
 index.html
 founder.html
+next-meal.html
+next-fix.html
 assets/
   css/
     base.css
     components.css
     home.css
     founder.css
+    case-study.css
   images/
     favicon.png
     marvilla.png
@@ -30,6 +34,7 @@ assets/
   js/
     main.js
     founder.js
+    case-study.js
     modules/
 README.md
 ```

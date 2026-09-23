@@ -27,7 +27,13 @@
     <ul class="nav-links">
       <li><a href="#about">Nosotros</a></li>
       <li><a href="#services">Servicios</a></li>
-      <li><a href="#portfolio">Casos</a></li>
+      <li class="nav-dropdown">
+        <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-controls="casesMenu">Casos <span aria-hidden="true">⌄</span></button>
+        <div class="nav-dropdown-menu" id="casesMenu">
+          <a href="next-meal.html"><small>Operación gastronómica</small><strong>Next-Meal</strong></a>
+          <a href="next-fix.html"><small>Gestión de reparaciones</small><strong>Next-Fix</strong></a>
+        </div>
+      </li>
       <li><a href="#process">Proceso</a></li>
       <li><a href="#contact">Contacto</a></li>
       <li><a href="founder.html">Liderazgo</a></li>
@@ -39,7 +45,9 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="#about">Nosotros</a>
     <a href="#services">Servicios</a>
-    <a href="#portfolio">Casos</a>
+    <span class="mobile-menu-label">Casos</span>
+    <a href="next-meal.html" class="mobile-case-link">Next-Meal <small>Comida y restaurantes</small></a>
+    <a href="next-fix.html" class="mobile-case-link">Next-Fix <small>Talleres y reparaciones</small></a>
     <a href="#process">Proceso</a>
     <a href="founder.html">Liderazgo</a>
     <a href="#contact" class="mm-cta">Hablemos →</a>
@@ -108,8 +116,8 @@
           <div class="card-label">enfoque empresarial</div>
         </div>
         <div class="about-card card-1">
-          <div class="card-num card-num--muted">2</div>
-          <div class="card-label">soluciones publicadas</div>
+          <div class="card-num card-num--muted">4</div>
+          <div class="card-label">proyectos destacados</div>
         </div>
         <div class="about-card card-2">
           <div class="card-num card-num--accent">CR</div>
@@ -190,9 +198,49 @@
     <div class="portfolio-header">
       <div class="section-label reveal">Experiencia aplicada</div>
       <h2 class="portfolio-headline reveal rd1">Casos reales, construidos para <em>contextos reales</em>.</h2>
-      <p class="services-sub reveal rd2">Dos soluciones publicadas para organizaciones costarricenses de sectores distintos. Presentamos el alcance comprobable, sin cifras estimadas.</p>
+      <p class="services-sub reveal rd2">Productos propios y experiencias digitales construidas alrededor de negocios reales.</p>
     </div>
     <div class="portfolio-grid">
+
+      <a href="https://github.com/Janrosky/Next-Meal" target="_blank" rel="noopener" class="project-card project-card--product reveal rd1">
+        <div class="project-frame product-frame meal-frame">
+          <div class="browser-bar">
+            <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+            <span class="browser-url">next-meal · operación local</span>
+          </div>
+          <div class="product-card-scene meal-card-scene" aria-hidden="true">
+            <div class="product-mini-nav"><i></i><span>MENÚ</span><span>CAJA</span><span>COCINA</span></div>
+            <div class="meal-ticket"><small>PEDIDO #024</small><strong>Todo en su punto.</strong><span>3 productos · ₡8 750</span></div>
+            <div class="meal-status"><i></i> Listo para cocina</div>
+          </div>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">Producto Nextek · Gastronomía</span>
+          <div class="project-name">Next-Meal</div>
+          <p class="project-desc">El menú, la caja y la cocina avanzan como un solo equipo. Una experiencia creada para devolverle el ritmo al negocio.</p>
+          <div class="project-link-row"><span>Ver proyecto en GitHub</span><span class="arrow">↗</span></div>
+        </div>
+      </a>
+
+      <a href="https://github.com/Janrosky/Next-Fix" target="_blank" rel="noopener" class="project-card project-card--product reveal rd2">
+        <div class="project-frame product-frame fix-frame">
+          <div class="browser-bar">
+            <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+            <span class="browser-url">next-fix · centro de control</span>
+          </div>
+          <div class="product-card-scene fix-card-scene" aria-hidden="true">
+            <svg class="fix-card-logo" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#171a1f"/><path d="M17 34h13V17l18 13H35v17L17 34Z" fill="#c8ff45"/><circle cx="47" cy="17" r="6" fill="#7c5cff"/></svg>
+            <div><small>NF-2026-0148</small><strong>Reparación bajo control.</strong><span>Diagnóstico → Entrega</span></div>
+            <b>LISTO</b>
+          </div>
+        </div>
+        <div class="project-body">
+          <span class="project-tag">Producto Nextek · Reparaciones</span>
+          <div class="project-name">Next-Fix</div>
+          <p class="project-desc">Cada equipo, repuesto, cobro y cliente en el mismo lugar. Del ingreso al taller hasta la entrega final.</p>
+          <div class="project-link-row"><span>Ver proyecto en GitHub</span><span class="arrow">↗</span></div>
+        </div>
+      </a>
 
       <a href="https://mar-villa-deco.vercel.app/" target="_blank" rel="noopener" class="project-card reveal rd2">
         <div class="project-frame">
